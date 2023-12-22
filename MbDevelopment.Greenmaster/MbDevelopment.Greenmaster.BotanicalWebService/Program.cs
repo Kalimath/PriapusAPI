@@ -26,7 +26,12 @@ var someSpecies = new Species[]
         Name = "Ginkgo Biloba",
         Description = "De Japanse notenboom, ginkgo, tempelboom of eendenpootboom is een boom uit de familie Ginkgoaceae. " +
                       "De soort is oorspronkelijk afkomstig uit China; hij wordt gekweekt en is niet meer in het wild bekend.",
-        CommonNames = ["Japanse notenboom", "ginkgo", "tempelboom", "eendenpootboom"]
+        CommonNames = 
+            [
+                new CommonName() { Id = 1, Name = "ginkgo" },
+                new CommonName() { Id = 1, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] },
+                new CommonName() { Id = 1, Name = "maidenhair tree" }
+            ]
     }
 };
 
