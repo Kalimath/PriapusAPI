@@ -1,4 +1,4 @@
-namespace MbDevelopment.Greenmaster.BotanicalWebService;
+namespace MbDevelopment.Greenmaster.Core;
 
 public static class LanguageIsoCodes
 {
