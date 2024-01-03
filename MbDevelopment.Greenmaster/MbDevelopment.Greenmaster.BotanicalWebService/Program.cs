@@ -1,4 +1,5 @@
 using MbDevelopment.Greenmaster.BotanicalWebService;
+using MbDevelopment.Greenmaster.Contracts.WebApi;
 using MbDevelopment.Greenmaster.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,12 +30,13 @@ var someSpecies = new Species[]
         LatinName = "Ginkgo Biloba",
         Description = "De Japanse notenboom, ginkgo, tempelboom of eendenpootboom is een boom uit de familie Ginkgoaceae. " +
                       "De soort is oorspronkelijk afkomstig uit China; hij wordt gekweekt en is niet meer in het wild bekend.",
-        CommonNames = 
-            [
+        CommonNames =
+            new [] {
                 new CommonName() { Id = 1, Name = "ginkgo" },
-                new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] },
+                new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = new [] { LanguageIsoCodes.Dutch }} ,
                 new CommonName() { Id = 3, Name = "maidenhair tree" }
-            ]
+                
+            }
     }
 };
 
@@ -44,10 +46,10 @@ var someGenera = new Genus[]
     new() { Id = 2, LatinName = "Linum" },
     new() { Id = 3, LatinName = "Strelitzia" },
 };
-app.MapGet("/species", () => someSpecies)
+app.MapGet(SpeciesApi.Url, () => someSpecies)
     .WithName("GetSpecies")
     .WithOpenApi();
-app.MapGet("/genus", () => someGenera)
+app.MapGet(GeneraApi.Url, () => someGenera)
     .WithName("GetGenera")
     .WithOpenApi();
 
