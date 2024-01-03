@@ -1,13 +1,17 @@
 using MbDevelopment.Greenmaster.BotanicalWebService;
 using MbDevelopment.Greenmaster.Contracts.WebApi;
 using MbDevelopment.Greenmaster.Core;
+using MbDevelopment.Greenmaster.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var services = builder.Services;
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+services.AddDbContext<BotanicalContext>(options => options.UseInMemoryDatabase("testDb"));
 
 var app = builder.Build();
 
@@ -19,8 +23,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
 
 var someSpecies = new Species[]
 {

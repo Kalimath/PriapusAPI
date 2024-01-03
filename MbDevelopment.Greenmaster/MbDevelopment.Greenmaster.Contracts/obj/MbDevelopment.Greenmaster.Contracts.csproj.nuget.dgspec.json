@@ -1,30 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj": {}
+    "C:\\Users\\m.broeckhoven\\RiderProjects\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj": {
+    "C:\\Users\\m.broeckhoven\\RiderProjects\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\m.broeckhoven\\RiderProjects\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj",
         "projectName": "MbDevelopment.Greenmaster.Contracts",
-        "projectPath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj",
-        "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\obj\\",
+        "projectPath": "C:\\Users\\m.broeckhoven\\RiderProjects\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\MbDevelopment.Greenmaster.Contracts.csproj",
+        "packagesPath": "C:\\Users\\m.broeckhoven\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\m.broeckhoven\\RiderProjects\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Contracts\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\m.broeckhoven\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net8.0"
+          "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -35,8 +43,8 @@
         }
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "imports": [
             "net461",
             "net462",
@@ -53,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\mathi\\.dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

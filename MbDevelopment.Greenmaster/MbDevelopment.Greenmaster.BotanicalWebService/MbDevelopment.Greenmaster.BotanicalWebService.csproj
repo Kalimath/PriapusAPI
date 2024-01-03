@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\MbDevelopment.Greenmaster.Contracts\MbDevelopment.Greenmaster.Contracts.csproj" />
       <ProjectReference Include="..\MbDevelopment.Greenmaster.Core\MbDevelopment.Greenmaster.Core.csproj" />
+      <ProjectReference Include="..\MbDevelopment.Greenmaster.DataAccess\MbDevelopment.Greenmaster.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>
