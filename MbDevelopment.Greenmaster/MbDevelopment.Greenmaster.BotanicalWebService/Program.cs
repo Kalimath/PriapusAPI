@@ -1,5 +1,4 @@
 using MbDevelopment.Greenmaster.BotanicalWebService;
-using MbDevelopment.Greenmaster.Contracts.WebApi;
 using MbDevelopment.Greenmaster.Core;
 using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var services = builder.Services;
 services.AddEndpointsApiExplorer();
+
+//services.AddControllers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(options => options.UseInMemoryDatabase("testDb"));
 
@@ -20,25 +21,26 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
 
+var someCommonNames = new [] {
+    new CommonName() { Id = 1, Name = "ginkgo" },
+    new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] } ,
+    new CommonName() { Id = 3, Name = "maidenhair tree" }
+                
+};
 var someSpecies = new Species[]
 {
     new ()
     {
         Id = 1,
         LatinName = "Ginkgo Biloba",
-        Description = "De Japanse notenboom, ginkgo, tempelboom of eendenpootboom is een boom uit de familie Ginkgoaceae. " +
+        Description = "Een boom uit de familie Ginkgoaceae. " +
                       "De soort is oorspronkelijk afkomstig uit China; hij wordt gekweekt en is niet meer in het wild bekend.",
-        CommonNames =
-            new [] {
-                new CommonName() { Id = 1, Name = "ginkgo" },
-                new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = new [] { LanguageIsoCodes.Dutch }} ,
-                new CommonName() { Id = 3, Name = "maidenhair tree" }
-                
-            }
+        CommonNames = someCommonNames
     }
 };
 
@@ -48,12 +50,9 @@ var someGenera = new Genus[]
     new() { Id = 2, LatinName = "Linum" },
     new() { Id = 3, LatinName = "Strelitzia" },
 };
-app.MapGet(SpeciesApi.Url, () => someSpecies)
-    .WithName("GetSpecies")
-    .WithOpenApi();
-app.MapGet(GeneraApi.Url, () => someGenera)
-    .WithName("GetGenera")
-    .WithOpenApi();
+
+app.RegisterSpeciesEndpoints(someSpecies);
+app.RegisterGenusEndpoints(someGenera);
+app.RegisterCommonNamesEndpoints(someCommonNames);
 
 app.Run();
-

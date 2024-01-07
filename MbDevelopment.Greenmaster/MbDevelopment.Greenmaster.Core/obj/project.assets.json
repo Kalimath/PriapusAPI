@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\MbDevelopment.Greenmaster.Core.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\MbDevelopment.Greenmaster.Core.csproj",
       "projectName": "MbDevelopment.Greenmaster.Core",
-      "projectPath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\MbDevelopment.Greenmaster.Core.csproj",
+      "projectPath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\MbDevelopment.Greenmaster.Core.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -59,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\mathi\\.dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
