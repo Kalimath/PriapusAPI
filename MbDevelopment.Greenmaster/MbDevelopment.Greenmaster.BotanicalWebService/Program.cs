@@ -23,6 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 }
+//TODO: add health-check for potential missing dependency injections
 
 app.UseHttpsRedirection();
 
