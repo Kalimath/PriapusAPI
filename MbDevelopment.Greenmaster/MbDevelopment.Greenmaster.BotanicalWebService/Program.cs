@@ -1,5 +1,6 @@
 using MbDevelopment.Greenmaster.BotanicalWebService;
 using MbDevelopment.Greenmaster.Core;
+using MbDevelopment.Greenmaster.Core.Botanical;
 using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,10 +29,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 var someCommonNames = new [] {
-    new CommonName() { Id = 1, Name = "ginkgo" },
-    new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] } ,
-    new CommonName() { Id = 3, Name = "maidenhair tree" }
-                
+    new CommonName() { Id = 1, Name = "ginkgo", UsedByLanguages = [LanguageIsoCodes.English] },
+    new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] }
 };
 var someSpecies = new Species[]
 {

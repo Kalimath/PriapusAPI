@@ -1,4 +1,5 @@
 using MbDevelopment.Greenmaster.Contracts.WebApi;
+using MbDevelopment.Greenmaster.Core.Botanical;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService;
 

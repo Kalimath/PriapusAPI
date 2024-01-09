@@ -1,5 +1,5 @@
-using MbDevelopment.Greenmaster.BotanicalWebService;
 using MbDevelopment.Greenmaster.Core;
+using MbDevelopment.Greenmaster.Core.Botanical;
 using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.DataAccess.Seeders;
@@ -20,10 +20,14 @@ public static class BotanicalSeeders
                 CommonNames =
                     new[]
                     {
-                        new CommonName() { Id = 1, Name = "ginkgo" },
+                        new CommonName
+                        {
+                            Id = 1,
+                            Name = "ginkgo",
+                            UsedByLanguages = [LanguageIsoCodes.English]
+                        },
                         new CommonName()
-                            { Id = 2, Name = "japanse notenboom", UsedByLanguages = new[] { LanguageIsoCodes.Dutch } },
-                        new CommonName() { Id = 3, Name = "maidenhair tree" }
+                            { Id = 2, Name = "japanse notenboom", UsedByLanguages = new[] { LanguageIsoCodes.Dutch } }
                     }
             }
         });

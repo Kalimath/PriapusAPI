@@ -1,6 +1,6 @@
 using MbDevelopment.Greenmaster.Core.Base;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService;
+namespace MbDevelopment.Greenmaster.Core.Botanical;
 
 public interface ITaxonIdentifier : IIdentifiable<int>
 {

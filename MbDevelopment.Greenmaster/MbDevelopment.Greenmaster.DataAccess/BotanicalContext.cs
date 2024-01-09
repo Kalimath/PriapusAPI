@@ -1,4 +1,4 @@
-﻿using MbDevelopment.Greenmaster.BotanicalWebService;
+﻿using MbDevelopment.Greenmaster.Core.Botanical;
 using MbDevelopment.Greenmaster.DataAccess.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
