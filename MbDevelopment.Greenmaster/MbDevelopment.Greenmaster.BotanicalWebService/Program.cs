@@ -1,7 +1,10 @@
 using MbDevelopment.Greenmaster.BotanicalWebService;
+using MbDevelopment.Greenmaster.Contracts.WebApi;
 using MbDevelopment.Greenmaster.Core;
 using MbDevelopment.Greenmaster.Core.Botanical;
 using MbDevelopment.Greenmaster.DataAccess;
+using MbDevelopment.Greenmaster.DataAccess.Base;
+using MbDevelopment.Greenmaster.DataAccess.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,10 @@ services.AddEndpointsApiExplorer();
 //services.AddControllers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(options => options.UseInMemoryDatabase("testDb"));
+
+services.AddScoped<ISpeciesQueryService, SpeciesQueryService>();
+services.AddScoped<IGeneraQueryService, GeneraQueryService>();
+services.AddScoped<ICommonNamesQueryService, CommonNamesQueryService>();
 
 var app = builder.Build();
 
@@ -28,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var someCommonNames = new [] {
+/*var someCommonNames = new [] {
     new CommonName() { Id = 1, Name = "ginkgo", UsedByLanguages = [LanguageIsoCodes.English] },
     new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] }
 };
@@ -46,13 +53,28 @@ var someSpecies = new Species[]
 
 var someGenera = new Genus[]
 {
-    new() { Id = 1, LatinName = "Ginkgo", Description = "non-flowering seed plants", Species = someSpecies.Select(species => species.Id).ToArray()},
+    new() { Id = 1, LatinName = "Ginkgo", Description = "non-flowering seed plants", Species = someSpecies.Select(species => species.Id).ToList()},
     new() { Id = 2, LatinName = "Linum" },
     new() { Id = 3, LatinName = "Strelitzia" },
-};
+};*/
 
-app.RegisterSpeciesEndpoints(someSpecies);
-app.RegisterGenusEndpoints(someGenera);
-app.RegisterCommonNamesEndpoints(someCommonNames);
 
-app.Run();
+    var speciesItems = app.MapGroup(SpeciesApi.Url);
+    speciesItems.MapGet("/", GetAllSpecies);
+
+    var commonNamesItems = app.MapGroup(CommonNamesApi.Url);
+    commonNamesItems.MapGet("/", GetAllCommonNames);
+
+    var generaItems = app.MapGroup(GeneraApi.Url);
+    generaItems.MapGet("/", GetAllGenera);
+
+    static async Task<IResult> GetAllSpecies(ISpeciesQueryService service) 
+        => TypedResults.Ok(await service.GetAll());
+
+    static async Task<IResult> GetAllCommonNames(ICommonNamesQueryService service) 
+        => TypedResults.Ok(await service.GetAll());
+
+    static async Task<IResult> GetAllGenera(IGeneraQueryService service) 
+        => TypedResults.Ok(await service.GetAll());
+
+    app.Run();
