@@ -10,7 +10,7 @@ public class SpeciesQueryService(BotanicalContext dbContext) : ISpeciesQueryServ
         throw new NotImplementedException();
     }
 
-    public Task<Species> GetById(int id)
+    public Task<Species?> GetById(int id)
     {
         throw new NotImplementedException();
     }

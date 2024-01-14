@@ -8,7 +8,9 @@ public static class BotanicalSeeders
 {
     public static void SeedSpecies(this ModelBuilder modelBuilder)
     {
-        /*var commonName1 = new CommonName() {
+        /*
+         Console.WriteLine("Seeding Species...");
+         var commonName1 = new CommonName() {
             Id = 1,
             Name = "ginkgo",
             UsedByLanguages = [LanguageIsoCodes.EN],
@@ -36,6 +38,7 @@ public static class BotanicalSeeders
 
     public static void SeedGenera(this ModelBuilder modelBuilder)
     {
+        Console.WriteLine("Seeding Genera...");
         modelBuilder.Entity<Genus>().HasData(
         [
             new Genus { Id = 1, LatinName = "Ginkgo", Description = "non-flowering seed plants" },

@@ -22,7 +22,7 @@ public class CommonNamesQueryService : ICommonNamesQueryService
         throw new NotImplementedException();
     }
 
-    public Task<CommonName> GetById(int id)
+    public Task<CommonName?> GetById(int id)
     {
         throw new NotImplementedException();
     }

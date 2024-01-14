@@ -1,5 +1,4 @@
 using MbDevelopment.Greenmaster.Core.Botanical;
-using MbDevelopment.Greenmaster.DataAccess.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.DataAccess.Services;
@@ -13,9 +12,9 @@ public class GeneraQueryService(BotanicalContext botanicalContext) : IGeneraQuer
         throw new NotImplementedException();
     }
 
-    public Task<Genus> GetById(int id)
+    public async Task<Genus?> GetById(int id)
     {
-        throw new NotImplementedException();
+        return await botanicalContext.Genera.FindAsync(id);
     }
 
     public Task<List<Genus>> GetAll()

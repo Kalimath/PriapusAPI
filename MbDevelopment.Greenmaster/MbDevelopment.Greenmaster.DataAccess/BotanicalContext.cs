@@ -1,24 +1,12 @@
 ﻿using MbDevelopment.Greenmaster.Core.Botanical;
 using MbDevelopment.Greenmaster.DataAccess.Seeders;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace MbDevelopment.Greenmaster.DataAccess;
 
-public class BotanicalContext : DbContext
+public class BotanicalContext(DbContextOptions<BotanicalContext> options) : DbContext(options)
 {
-    protected readonly IConfiguration Configuration;
-
-    public BotanicalContext(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        // in memory database used for simplicity, change to a real db for production applications
-        options.UseInMemoryDatabase("testDb");
-    }
+    protected override void OnConfiguring(DbContextOptionsBuilder options){}
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

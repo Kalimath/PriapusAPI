@@ -1,9 +1,6 @@
-using MbDevelopment.Greenmaster.BotanicalWebService;
+
 using MbDevelopment.Greenmaster.Contracts.WebApi;
-using MbDevelopment.Greenmaster.Core;
-using MbDevelopment.Greenmaster.Core.Botanical;
 using MbDevelopment.Greenmaster.DataAccess;
-using MbDevelopment.Greenmaster.DataAccess.Base;
 using MbDevelopment.Greenmaster.DataAccess.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +13,10 @@ services.AddEndpointsApiExplorer();
 
 //services.AddControllers();
 services.AddSwaggerGen();
-services.AddDbContext<BotanicalContext>(options => options.UseInMemoryDatabase("testDb"));
+services.AddDbContext<BotanicalContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("localDb"));
+});
 
 services.AddScoped<ISpeciesQueryService, SpeciesQueryService>();
 services.AddScoped<IGeneraQueryService, GeneraQueryService>();
@@ -67,6 +67,7 @@ var someGenera = new Genus[]
 
     var generaItems = app.MapGroup(GeneraApi.Url);
     generaItems.MapGet("/", GetAllGenera);
+    generaItems.MapGet("/{id}", GetGenusById);
 
     static async Task<IResult> GetAllSpecies(ISpeciesQueryService service) 
         => TypedResults.Ok(await service.GetAll());
@@ -76,5 +77,12 @@ var someGenera = new Genus[]
 
     static async Task<IResult> GetAllGenera(IGeneraQueryService service) 
         => TypedResults.Ok(await service.GetAll());
+
+    static async Task<IResult> GetGenusById(int id, IGeneraQueryService service) 
+    {
+        var result = await service.GetById(id);
+        
+        return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
+    }
 
     app.Run();
