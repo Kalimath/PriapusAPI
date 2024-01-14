@@ -35,30 +35,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-/*var someCommonNames = new [] {
-    new CommonName() { Id = 1, Name = "ginkgo", UsedByLanguages = [LanguageIsoCodes.English] },
-    new CommonName() { Id = 2, Name = "japanse notenboom", UsedByLanguages = [LanguageIsoCodes.Dutch] }
-};
-var someSpecies = new Species[]
-{
-    new ()
-    {
-        Id = 1,
-        LatinName = "Ginkgo Biloba",
-        Description = "Een boom uit de familie Ginkgoaceae. " +
-                      "De soort is oorspronkelijk afkomstig uit China; hij wordt gekweekt en is niet meer in het wild bekend.",
-        CommonNames = someCommonNames
-    }
-};
-
-var someGenera = new Genus[]
-{
-    new() { Id = 1, LatinName = "Ginkgo", Description = "non-flowering seed plants", Species = someSpecies.Select(species => species.Id).ToList()},
-    new() { Id = 2, LatinName = "Linum" },
-    new() { Id = 3, LatinName = "Strelitzia" },
-};*/
-
-
     var speciesItems = app.MapGroup(SpeciesApi.Url);
     speciesItems.MapGet("/", GetAllSpecies);
 

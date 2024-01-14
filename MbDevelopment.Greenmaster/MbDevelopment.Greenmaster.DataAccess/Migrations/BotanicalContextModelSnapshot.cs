@@ -56,6 +56,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LatinName")
@@ -76,11 +77,13 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                         new
                         {
                             Id = 2,
+                            Description = "",
                             LatinName = "Linum"
                         },
                         new
                         {
                             Id = 3,
+                            Description = "",
                             LatinName = "Strelitzia"
                         });
                 });
@@ -94,6 +97,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GenusId")
@@ -108,6 +112,15 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.HasIndex("GenusId");
 
                     b.ToTable("Species");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Een boom uit de familie Ginkgoaceae. De soort is oorspronkelijk afkomstig uit China; hij wordt gekweekt en is niet meer in het wild bekend.",
+                            GenusId = 0,
+                            LatinName = "Ginkgo Biloba"
+                        });
                 });
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Botanical.CommonName", b =>

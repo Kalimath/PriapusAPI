@@ -15,8 +15,9 @@ public class BotanicalContext(DbContextOptions<BotanicalContext> options) : DbCo
         //modelBuilder.Entity<Cultivar>().HasBaseType(typeof(ITaxonIdentifier));
         
         //seed data
-        modelBuilder.SeedSpecies();
         modelBuilder.SeedGenera();
+        modelBuilder.SeedSpecies();
+        //modelBuilder.SeedCommonNames();
     }
     
     public DbSet<Species> Species { get; set; } = null!;
