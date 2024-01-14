@@ -3,14 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.DataAccess.Services;
 
-public class SpeciesQueryService : ISpeciesQueryService
+public class SpeciesQueryService(BotanicalContext dbContext) : ISpeciesQueryService
 {
-    private readonly BotanicalContext _dbContext;
-    public SpeciesQueryService(BotanicalContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-    
     public Task Add(Species newObject)
     {
         throw new NotImplementedException();
@@ -23,7 +17,7 @@ public class SpeciesQueryService : ISpeciesQueryService
 
     public Task<List<Species>> GetAll()
     {
-        return _dbContext.Species.ToListAsync();
+        return dbContext.Species.ToListAsync();
     }
 
     public Task Update(Species updatedObject)
