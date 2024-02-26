@@ -3,6 +3,6 @@ using MbDevelopment.Greenmaster.DataAccess.Base;
 
 namespace MbDevelopment.Greenmaster.DataAccess.Services;
 
-public interface IGeneraQueryService : IQueryService<Genus, int>
+public interface IGenusQueryService : IQueryService<Genus, int>
 {
 }

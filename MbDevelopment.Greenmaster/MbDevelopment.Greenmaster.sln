@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbDevelopment.Greenmaster.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbDevelopment.Greenmaster.DataAccess.Tests", "MbDevelopment.Greenmaster.DataAccess.Tests\MbDevelopment.Greenmaster.DataAccess.Tests.csproj", "{E61A1003-4BA6-4FDB-9B1A-553059103343}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbDevelopment.Greenmaster.BotanicalWebService.Tests", "MbDevelopment.Greenmaster.BotanicalWebService.Tests\MbDevelopment.Greenmaster.BotanicalWebService.Tests.csproj", "{85319BEB-67CB-431A-8C3E-4F65FB74E477}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{E61A1003-4BA6-4FDB-9B1A-553059103343}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E61A1003-4BA6-4FDB-9B1A-553059103343}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E61A1003-4BA6-4FDB-9B1A-553059103343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85319BEB-67CB-431A-8C3E-4F65FB74E477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85319BEB-67CB-431A-8C3E-4F65FB74E477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85319BEB-67CB-431A-8C3E-4F65FB74E477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85319BEB-67CB-431A-8C3E-4F65FB74E477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

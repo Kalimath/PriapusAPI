@@ -1,48 +1,39 @@
 using MbDevelopment.Greenmaster.Core.Botanical;
-using MbDevelopment.Greenmaster.DataAccess.Base;
+using MbDevelopment.Greenmaster.Core.Examples;
 using MbDevelopment.Greenmaster.DataAccess.Services;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using Moq.EntityFrameworkCore;
+using MbDevelopment.Greenmaster.DataAccess.Tests.Helpers;
 
 namespace MbDevelopment.Greenmaster.DataAccess.Tests.Services.GeneraQueryServiceTests;
 
-public class GetByIdShould
+[Collection(nameof(BotanicalDataFixture))]
+public class GetByIdShould : IGetByIdShould
 {
-    private readonly List<Genus> _someGenera;
-    private readonly Genus _someGenus;
-    private readonly Mock<BotanicalContext> _mockContext;
-    private readonly Genus _someOtherGenus;
+    private readonly IGenusQueryService _sut;
 
 
-    public GetByIdShould()
+    public GetByIdShould(BotanicalDataFixture fixture)
     {
-        _someGenus = new Genus { Id = 1, LatinName = "Hedera"};
-        _someOtherGenus = new Genus { Id = 2, LatinName = "Hosta"};
-        _someGenera = new List<Genus>
-        {
-            _someGenus, _someOtherGenus
-        };
-        _mockContext = new Mock<BotanicalContext>();
-        
-        
+        _sut = new GenusQueryService(fixture.BotanicalContext);
         
     }
 
-    [Fact(Skip = "Not Implemented")]
-    public async Task GetEmployees_WhenCalled_ReturnsEmployeeListAsync()
+    [Fact]
+    public async Task ReturnExpected_WhenFound()
     {
-        _mockContext.Setup(x => x.Genera.FindAsync(_someGenus.Id).Result).Returns(_someGenus);
-        var service = GetQueryService();
-        
-        var result = await service.GetById(_someGenus.Id);
+        var result = await _sut.GetById(GenusExamples.Ginkgo.Id);
         
         Assert.NotNull(result);
-        Assert.Equal(_someGenus, result);
+        Assert.Equivalent(GenusExamples.Ginkgo, result);
     }
-
-    private GeneraQueryService GetQueryService()
+    
+    [Fact]
+    public async Task ReturnNull_WhenNotFound()
     {
-        return new GeneraQueryService(_mockContext.Object);
+        var genera = new List<Genus> { GenusExamples.Ginkgo, GenusExamples.Hosta };
+        var invalidId = genera.Max(genus => genus.Id) + 1;
+        
+        var result = await _sut.GetById(invalidId);
+        
+        Assert.Null(result);
     }
 }

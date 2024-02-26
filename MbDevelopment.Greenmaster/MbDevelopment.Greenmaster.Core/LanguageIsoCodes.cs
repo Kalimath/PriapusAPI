@@ -1,3 +1,4 @@
+// ReSharper disable InconsistentNaming
 namespace MbDevelopment.Greenmaster.Core;
 
 public enum LanguageIsoCodes

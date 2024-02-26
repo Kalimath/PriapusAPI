@@ -1,4 +1,3 @@
-
 using MbDevelopment.Greenmaster.Contracts.WebApi;
 using MbDevelopment.Greenmaster.DataAccess;
 using MbDevelopment.Greenmaster.DataAccess.Services;
@@ -19,7 +18,7 @@ services.AddDbContext<BotanicalContext>(opts =>
 });
 
 services.AddScoped<ISpeciesQueryService, SpeciesQueryService>();
-services.AddScoped<IGeneraQueryService, GeneraQueryService>();
+services.AddScoped<IGenusQueryService, GenusQueryService>();
 services.AddScoped<ICommonNamesQueryService, CommonNamesQueryService>();
 
 var app = builder.Build();
@@ -36,16 +35,17 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
     var speciesItems = app.MapGroup(SpeciesApi.Url);
-    speciesItems.MapGet("/", GetAllSpecies);
+    // speciesItems.MapGet("/", GetAllSpecies);
 
     var commonNamesItems = app.MapGroup(CommonNamesApi.Url);
-    commonNamesItems.MapGet("/", GetAllCommonNames);
+    // commonNamesItems.MapGet("/", GetAllCommonNames);
 
-    var generaItems = app.MapGroup(GeneraApi.Url);
-    generaItems.MapGet("/", GetAllGenera);
-    generaItems.MapGet("/{id}", GetGenusById);
+    //var generaItems = app.MapGroup(GeneraApi.Url);
+    //generaItems.MapGet("/", GetAllGenera);
+    //app.MapPost("/genus", ([FromBody] string id) => Results.Ok()); //GetGenusById
+    // generaItems.MapPost("/", AddGenus);
 
-    static async Task<IResult> GetAllSpecies(ISpeciesQueryService service) 
+    /*static async Task<IResult> GetAllSpecies(ISpeciesQueryService service) 
         => TypedResults.Ok(await service.GetAll());
 
     static async Task<IResult> GetAllCommonNames(ICommonNamesQueryService service) 
@@ -60,5 +60,18 @@ app.UseHttpsRedirection();
         
         return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
     }
+
+    static async Task<IResult> AddGenus(Genus genus, IGeneraQueryService service)
+    {
+        try
+        {
+            await service.Add(genus);
+            return TypedResults.Created();
+        }
+        catch (Exception ex)
+        {
+            return TypedResults.BadRequest($"Failed to add {nameof(Genus)}: {ex.Message}");
+        }
+    }*/
 
     app.Run();
