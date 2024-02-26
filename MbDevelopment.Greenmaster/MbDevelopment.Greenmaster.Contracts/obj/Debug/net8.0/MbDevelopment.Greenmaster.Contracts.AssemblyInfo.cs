@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MbDevelopment.Greenmaster.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f6f8f224894d9dbbe4d8f7bb2284b783ced6c96")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d01f12f02527959ed2911260cf117ad73d1bdfc7")]
 [assembly: System.Reflection.AssemblyProductAttribute("MbDevelopment.Greenmaster.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MbDevelopment.Greenmaster.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

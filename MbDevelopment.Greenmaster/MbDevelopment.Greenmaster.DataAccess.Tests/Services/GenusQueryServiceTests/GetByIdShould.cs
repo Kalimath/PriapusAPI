@@ -1,26 +1,20 @@
 using MbDevelopment.Greenmaster.Core.Botanical;
 using MbDevelopment.Greenmaster.Core.Examples;
-using MbDevelopment.Greenmaster.DataAccess.Services;
 using MbDevelopment.Greenmaster.DataAccess.Tests.Helpers;
 
-namespace MbDevelopment.Greenmaster.DataAccess.Tests.Services.GeneraQueryServiceTests;
+namespace MbDevelopment.Greenmaster.DataAccess.Tests.Services.GenusQueryServiceTests;
 
-[Collection(nameof(BotanicalDataFixture))]
-public class GetByIdShould : IGetByIdShould
+public class GetByIdShould : GenusQueryServiceTestBase, IGetByIdShould
 {
-    private readonly IGenusQueryService _sut;
-
-
-    public GetByIdShould(BotanicalDataFixture fixture)
+    public GetByIdShould(BotanicalDataFixture fixture) : base(fixture)
     {
-        _sut = new GenusQueryService(fixture.BotanicalContext);
-        
     }
+    //TODO: test for behavior when id is invalid
 
     [Fact]
     public async Task ReturnExpected_WhenFound()
     {
-        var result = await _sut.GetById(GenusExamples.Ginkgo.Id);
+        var result = await Sut.GetById(GenusExamples.Ginkgo.Id);
         
         Assert.NotNull(result);
         Assert.Equivalent(GenusExamples.Ginkgo, result);
@@ -32,7 +26,7 @@ public class GetByIdShould : IGetByIdShould
         var genera = new List<Genus> { GenusExamples.Ginkgo, GenusExamples.Hosta };
         var invalidId = genera.Max(genus => genus.Id) + 1;
         
-        var result = await _sut.GetById(invalidId);
+        var result = await Sut.GetById(invalidId);
         
         Assert.Null(result);
     }

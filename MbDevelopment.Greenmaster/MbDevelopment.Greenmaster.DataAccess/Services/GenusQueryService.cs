@@ -1,5 +1,7 @@
 using MbDevelopment.Greenmaster.Core.Botanical;
 using Microsoft.EntityFrameworkCore;
+using static System.String;
+using static MbDevelopment.Greenmaster.Core.HelperMethods.Validators;
 
 namespace MbDevelopment.Greenmaster.DataAccess.Services;
 
@@ -16,7 +18,8 @@ public class GenusQueryService : IGenusQueryService
     {
         try
         {
-            ArgumentNullException.ThrowIfNull(genus);
+            ThrowIfNull(genus);
+            ValidateGenus(genus);
             _botanicalContext.Genera.Add(genus);
             return _botanicalContext.SaveChangesAsync();
         }
@@ -25,6 +28,14 @@ public class GenusQueryService : IGenusQueryService
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    private static void ValidateGenus(Genus genus)
+    {
+        if (IsInvalidId(genus.Id))
+            throw new ArgumentOutOfRangeException(nameof(genus.Id), "Id must be greater than zero");
+        if(IsNullOrEmpty(genus.LatinName)) 
+            throw new ArgumentNullException(nameof(genus.LatinName), "{nameof(genus.LatinName)} cannot be null or empty");
     }
 
     public async Task<Genus?> GetById(int id)

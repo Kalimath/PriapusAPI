@@ -1,5 +1,3 @@
-using MbDevelopment.Greenmaster.BotanicalWebService.Controllers;
-
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Tests.Controllers.GenusControllerTests;
 
 public class CtorShould
