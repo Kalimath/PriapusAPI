@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MbDevelopment.Greenmaster.Core.Base;
 
 namespace MbDevelopment.Greenmaster.Core.Botanical;
 
-public class Genus : ITaxonIdentifier
+public class Genus : ITaxonomyItem, IIdentifiable<int>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

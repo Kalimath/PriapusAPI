@@ -4,7 +4,7 @@ using MbDevelopment.Greenmaster.Core.Base;
 
 namespace MbDevelopment.Greenmaster.Core.Botanical;
 
-public class Species : ITaxonIdentifier, IPlantable
+public class Species : ITaxonomyItem, IPlantable
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
