@@ -1,3 +1,4 @@
+using System.Reflection;
 using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddEndpointsApiExplorer();
 
+services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 services.AddControllers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(opts =>
@@ -28,5 +30,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+        
+app.UseAuthorization();
+app.UseEndpoints(routeBuilder => routeBuilder.MapControllers());
 
 app.Run();

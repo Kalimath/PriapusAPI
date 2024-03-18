@@ -1,4 +1,4 @@
-namespace MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy;
+namespace MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 
 public class KingdomApi
 {

@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "I+70/o3hq6jMoekHY6wTlEXmvhYl3e/SugzXju1OmtUQcTsfAKT7LEQIEsmqeT4Nijb3hujQhPygsciBV3jY6w==",
+  "dgSpecHash": "mwNjEcIGoXFtUcGOe4BVikMlIDhKBk8/4Df06A0ZB1jpMBJOe6pW4vITWYGuge3yvkRNVvq7PLG9Iu5CbaHCvg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mathi\\RiderProjects\\PriapusAPI\\GreenmasterPOC\\MbDevelopment.Greenmaster\\MbDevelopment.Greenmaster.Core\\MbDevelopment.Greenmaster.Core.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\mathi\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
+    "C:\\Users\\mathi\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\mathi\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
