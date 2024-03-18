@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddEndpointsApiExplorer();
 
-//services.AddControllers();
+services.AddControllers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(opts =>
 {
