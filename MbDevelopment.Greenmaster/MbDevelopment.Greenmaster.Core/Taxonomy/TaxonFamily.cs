@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MbDevelopment.Greenmaster.Core.Base;
-using MbDevelopment.Greenmaster.Core.Botanical;
 
 namespace MbDevelopment.Greenmaster.Core.Taxonomy;
 
-public class TaxonFamily : ITaxonomyItem, IIdentifiable<Guid>
+[Table("Taxonomy.Families")]
+public class TaxonFamily : ITaxonGroup
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

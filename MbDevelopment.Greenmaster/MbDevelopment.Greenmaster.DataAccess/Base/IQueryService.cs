@@ -1,5 +1,3 @@
-using MbDevelopment.Greenmaster.Core.Botanical;
-
 namespace MbDevelopment.Greenmaster.DataAccess.Base;
 
 public interface IQueryService<T1, in T2>

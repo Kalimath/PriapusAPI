@@ -1,16 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MbDevelopment.Greenmaster.Core.Base;
-using MbDevelopment.Greenmaster.Core.Botanical;
 
 namespace MbDevelopment.Greenmaster.Core.Taxonomy;
 
-public class TaxonClass : ITaxonomyItem, IIdentifiable<Guid>
+[Table("Taxonomy.Classes")]
+public class TaxonClass : ITaxonGroup
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    public TaxonDivision Division { get; set; }
+    public TaxonPhylum Phylum { get; set; }
     public string LatinName { get; set; }
     public string Description { get; set; }
     
