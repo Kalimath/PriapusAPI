@@ -1,3 +1,4 @@
+using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.CQRS;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
@@ -12,17 +13,21 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 public class KingdomController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IHashids _hashids;
 
-    public KingdomController(IMediator mediator)
+    public KingdomController(IMediator mediator, IHashids hashids)
     {
         _mediator = mediator;
+        _hashids = hashids;
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult<KingdomDto>> GetKingdom(Guid id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<KingdomDto>> GetKingdom([FromRoute] string id)
     {
+        var rawId = _hashids.Decode(id);
+        if (rawId.Length == 0) return NotFound();
         Console.WriteLine("endpoint hit");
-        var query = new GetKingdomByIdQuery(id);
+        var query = new GetKingdomByIdQuery(rawId.First());
         var result = await _mediator.Send(query);
         
         return Ok(result);

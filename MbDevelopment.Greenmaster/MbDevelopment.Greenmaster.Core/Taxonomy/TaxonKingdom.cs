@@ -8,7 +8,7 @@ public class TaxonKingdom : ITaxonGroup
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string LatinName { get; set; }
     public string Description { get; set; }
     public ICollection<TaxonPhylum> RelatedPhyla { get; set; } = new List<TaxonPhylum>(); // Collection navigation containing dependents

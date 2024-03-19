@@ -11,25 +11,25 @@ public static class TaxonomySeeders
         {
             new ()
             {
-                Id = Guid.Parse("8925789d-2a37-4b86-89ba-657184ca4e33"),
+                Id = 1,
                 LatinName = "Animalia",
                 Description = "The kingdom of animals.",
             },
             new ()
             {
-                Id = Guid.Parse("0d68e396-d131-40c0-b89c-cc8ecd9b67dc"),
+                Id = 2,
                 LatinName = "Plantae",
                 Description = "The kingdom of plants.",
             },
             new ()
             {
-                Id = Guid.Parse("38d1cc00-9f59-472a-9f84-323e18ecc968"),
+                Id = 3,
                 LatinName = "Fungi",
                 Description = "The kingdom of fungi.",
             },
             new ()
             {
-                Id = Guid.Parse("045abec7-aa1f-42f9-b14a-a099ca597041"),
+                Id = 4,
                 LatinName = "Protista",
                 Description = "The kingdom of protista.",
             }

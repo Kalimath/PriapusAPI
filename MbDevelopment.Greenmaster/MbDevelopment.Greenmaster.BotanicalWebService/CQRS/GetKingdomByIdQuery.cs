@@ -3,7 +3,7 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS;
 
-public class GetKingdomByIdQuery(Guid id) : IRequest<KingdomDto>
+public class GetKingdomByIdQuery(int id) : IRequest<KingdomDto>
 {
-    public Guid Id { get; set; } = id;
+    public int Id { get; set; } = id;
 }

@@ -4,23 +4,24 @@ using MbDevelopment.Greenmaster.Core.Base;
 
 namespace MbDevelopment.Greenmaster.Core.Taxonomy;
 
-public class Plant : IIdentifiable<Guid>
+public class Plant : IIdentifiable<int>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public ISpecies Specie { get; set; }
     public string Description { get; set; }
 
-    public Plant(Guid id, ISpecies specie, string description = "")
+    public Plant(ISpecies specie, string description = "")
     {
-        Id = id != Guid.Empty ? id : throw new ArgumentException("Id cannot be empty", nameof(id));
         Specie = specie ?? throw new ArgumentNullException(nameof(specie));
         Description = description ?? "";
     }
 
-    public Plant(ISpecies specie, string description = "") : this(Guid.NewGuid(), specie, description)
+    public Plant(int id, ISpecies specie, string description = "") : this(specie, description)
     {
+        Id = id > 0 ? id : throw new ArgumentException("Id cannot be empty", nameof(id));
+        
     }
 }
 

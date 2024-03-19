@@ -7,7 +7,7 @@ public class CtorShould
 {
     private const string SomeLatinName = "some species latinName";
     private const string SomeDescription = "some plant description";
-    private static readonly Guid SomeId = Guid.NewGuid();
+    private static readonly int SomeId = 5586;
     private readonly ISpecies _someSpecie;
 
     public CtorShould()
@@ -49,9 +49,9 @@ public class CtorShould
     }
 
     [Fact]
-    public void ThrowArgumentException_WhenIdEmpty()
+    public void ThrowArgumentException_WhenIdInvalid()
     {
-        Assert.Throws<ArgumentException>(() => new Plant(Guid.Empty, _someSpecie, SomeDescription));
+        Assert.Throws<ArgumentException>(() => new Plant(-1, _someSpecie, SomeDescription));
     }
 
     [Fact]

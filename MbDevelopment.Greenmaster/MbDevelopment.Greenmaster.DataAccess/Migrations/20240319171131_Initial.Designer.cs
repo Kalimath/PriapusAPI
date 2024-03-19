@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 {
     [DbContext(typeof(BotanicalContext))]
-    [Migration("20240318193450_InitialTaxonGroup")]
-    partial class InitialTaxonGroup
+    [Migration("20240319171131_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonClass", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -39,8 +41,8 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PhylumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("PhylumId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -51,9 +53,11 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonFamily", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -63,8 +67,8 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -75,16 +79,18 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonGenus", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("FamilyId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("FamilyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LatinName")
                         .IsRequired()
@@ -99,9 +105,11 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonKingdom", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -118,25 +126,25 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8925789d-2a37-4b86-89ba-657184ca4e33"),
+                            Id = 1,
                             Description = "The kingdom of animals.",
                             LatinName = "Animalia"
                         },
                         new
                         {
-                            Id = new Guid("0d68e396-d131-40c0-b89c-cc8ecd9b67dc"),
+                            Id = 2,
                             Description = "The kingdom of plants.",
                             LatinName = "Plantae"
                         },
                         new
                         {
-                            Id = new Guid("38d1cc00-9f59-472a-9f84-323e18ecc968"),
+                            Id = 3,
                             Description = "The kingdom of fungi.",
                             LatinName = "Fungi"
                         },
                         new
                         {
-                            Id = new Guid("045abec7-aa1f-42f9-b14a-a099ca597041"),
+                            Id = 4,
                             Description = "The kingdom of protista.",
                             LatinName = "Protista"
                         });
@@ -144,12 +152,14 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonOrder", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ClassId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -168,13 +178,18 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonPhylum", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KingdomId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LatinName")
                         .IsRequired()
@@ -185,16 +200,18 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaxonKingdomId");
+                    b.HasIndex("KingdomId");
 
                     b.ToTable("Taxonomy.Phyla");
                 });
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonSpecies", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Cultivar")
                         .IsRequired()
@@ -204,8 +221,8 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("GenusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("GenusId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LatinName")
                         .IsRequired()
@@ -266,7 +283,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 {
                     b.HasOne("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonKingdom", "Kingdom")
                         .WithMany("RelatedPhyla")
-                        .HasForeignKey("TaxonKingdomId")
+                        .HasForeignKey("KingdomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,4 +1,5 @@
 using System.Reflection;
+using HashidsNet;
 using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ var services = builder.Services;
 services.AddEndpointsApiExplorer();
 
 services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+services.AddSingleton<IHashids>(_ => new Hashids(".Wd#9?1HJGT4BW/Mel", 11));
 services.AddControllers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(opts =>

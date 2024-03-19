@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialTaxonGroup : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,8 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Kingdoms",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -30,8 +31,10 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Phyla",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TaxonKingdomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    KingdomId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -39,8 +42,8 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Taxonomy.Phyla", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Taxonomy.Phyla_Taxonomy.Kingdoms_TaxonKingdomId",
-                        column: x => x.TaxonKingdomId,
+                        name: "FK_Taxonomy.Phyla_Taxonomy.Kingdoms_KingdomId",
+                        column: x => x.KingdomId,
                         principalTable: "Taxonomy.Kingdoms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -50,8 +53,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Classes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PhylumId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PhylumId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -70,8 +74,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Orders",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClassId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -90,8 +95,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Families",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -110,8 +116,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Genera",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FamilyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FamilyId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -130,8 +137,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 name: "Taxonomy.Species",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GenusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GenusId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cultivar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -152,10 +160,10 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 columns: new[] { "Id", "Description", "LatinName" },
                 values: new object[,]
                 {
-                    { new Guid("045abec7-aa1f-42f9-b14a-a099ca597041"), "The kingdom of protista.", "Protista" },
-                    { new Guid("0d68e396-d131-40c0-b89c-cc8ecd9b67dc"), "The kingdom of plants.", "Plantae" },
-                    { new Guid("38d1cc00-9f59-472a-9f84-323e18ecc968"), "The kingdom of fungi.", "Fungi" },
-                    { new Guid("8925789d-2a37-4b86-89ba-657184ca4e33"), "The kingdom of animals.", "Animalia" }
+                    { 1, "The kingdom of animals.", "Animalia" },
+                    { 2, "The kingdom of plants.", "Plantae" },
+                    { 3, "The kingdom of fungi.", "Fungi" },
+                    { 4, "The kingdom of protista.", "Protista" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -179,9 +187,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Taxonomy.Phyla_TaxonKingdomId",
+                name: "IX_Taxonomy.Phyla_KingdomId",
                 table: "Taxonomy.Phyla",
-                column: "TaxonKingdomId");
+                column: "KingdomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Taxonomy.Species_GenusId",
