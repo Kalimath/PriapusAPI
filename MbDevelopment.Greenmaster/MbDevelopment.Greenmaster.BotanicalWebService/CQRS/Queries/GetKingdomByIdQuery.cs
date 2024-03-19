@@ -1,9 +1,10 @@
+using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
 using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries;
 
-public class GetKingdomByIdQuery(int id) : IRequest<KingdomDto>
+public class GetKingdomByIdQuery(string id) : IRequest<ApiResponse<KingdomDto>>
 {
-    public int Id { get; set; } = id;
+    public string Id { get; set; } = id;
 }
