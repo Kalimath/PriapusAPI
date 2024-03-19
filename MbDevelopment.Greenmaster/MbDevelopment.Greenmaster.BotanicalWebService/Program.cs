@@ -1,5 +1,5 @@
-using System.Reflection;
 using HashidsNet;
+using MbDevelopment.Greenmaster.BotanicalWebService;
 using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var services = builder.Services;
 services.AddEndpointsApiExplorer();
-
-services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 services.AddSingleton<IHashids>(_ => new Hashids(".Wd#9?1HJGT4BW/Mel", 11));
+services.AddCqrs();
+services.AddValidation();
 services.AddControllers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(opts =>

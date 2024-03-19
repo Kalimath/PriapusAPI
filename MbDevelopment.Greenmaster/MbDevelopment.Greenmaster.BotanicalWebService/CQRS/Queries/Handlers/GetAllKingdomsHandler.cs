@@ -4,7 +4,7 @@ using MbDevelopment.Greenmaster.DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries.Handlers;
 
 public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
 {

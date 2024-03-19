@@ -1,18 +1,18 @@
 using HashidsNet;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
-using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries.Handlers;
 
-public class GetKingdomByIdQueryHandler : IRequestHandler<GetKingdomByIdQuery, KingdomDto>
+public class GetKingdomByIdHandler : IRequestHandler<GetKingdomByIdQuery, KingdomDto>
 {
     private readonly BotanicalContext _context;
     private readonly KingdomMapper _kingdomMapper;
 
-    public GetKingdomByIdQueryHandler(BotanicalContext context, IHashids hashids)
+    public GetKingdomByIdHandler(BotanicalContext context, IHashids hashids)
     {
         _context = context;
         _kingdomMapper = new KingdomMapper(hashids);
@@ -27,18 +27,5 @@ public class GetKingdomByIdQueryHandler : IRequestHandler<GetKingdomByIdQuery, K
         if (kingdom == null) return null;
          
         return _kingdomMapper.ToDto(kingdom);
-    }
-}
-
-public class KingdomMapper(IHashids hashids)
-{
-    public KingdomDto ToDto(TaxonKingdom kingdom)
-    {
-        return new KingdomDto()
-        {
-            HashedId = hashids.Encode(kingdom.Id),
-            Name = kingdom.LatinName,
-            Description = kingdom.Description
-        };
     }
 }
