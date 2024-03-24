@@ -1,5 +1,5 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers;

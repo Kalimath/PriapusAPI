@@ -1,21 +1,19 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
-using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
-using MbDevelopment.Greenmaster.Core.Taxonomy;
-using MbDevelopment.Greenmaster.DataAccess;
+using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Queries.TaxonKingdom;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries.Handlers;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.TaxonKingdom;
 
 public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
 {
-    private readonly IRepository<TaxonKingdom> _repository;
+    private readonly IRepository<Core.Taxonomy.TaxonKingdom> _repository;
     private readonly KingdomMapper _mapper;
     
-    public GetAllKingdomsHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
+    public GetAllKingdomsHandler(IRepository<Core.Taxonomy.TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository;
         _mapper = new KingdomMapper(hashids); 

@@ -1,5 +1,5 @@
 using MediatR;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Commands;
+namespace MbDevelopment.Greenmaster.Contracts.Commands;
 
 public class CommandBase<T> : IRequest<T> where T : class{}

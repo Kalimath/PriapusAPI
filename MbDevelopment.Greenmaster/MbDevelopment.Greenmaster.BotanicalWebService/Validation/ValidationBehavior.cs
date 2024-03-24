@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Validation;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation;
 
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>

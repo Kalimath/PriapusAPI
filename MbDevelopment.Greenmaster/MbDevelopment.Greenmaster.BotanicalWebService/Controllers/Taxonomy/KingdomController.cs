@@ -1,6 +1,9 @@
 using System.Net;
-using MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Commands;
-using MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries;
+using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Base;
+using MbDevelopment.Greenmaster.Contracts.Commands;
+using MbDevelopment.Greenmaster.Contracts.Commands.TaxonKingdom;
+using MbDevelopment.Greenmaster.Contracts.Queries;
+using MbDevelopment.Greenmaster.Contracts.Queries.TaxonKingdom;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

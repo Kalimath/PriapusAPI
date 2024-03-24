@@ -30,4 +30,8 @@
       <ProjectReference Include="..\MbDevelopment.Greenmaster.DataAccess\MbDevelopment.Greenmaster.DataAccess.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Handlers\" />
+    </ItemGroup>
+
 </Project>

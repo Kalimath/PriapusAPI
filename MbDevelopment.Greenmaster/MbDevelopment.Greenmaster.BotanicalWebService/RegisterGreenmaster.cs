@@ -1,6 +1,6 @@
 using System.Reflection;
 using FluentValidation;
-using MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Validation;
+using MbDevelopment.Greenmaster.BotanicalWebService.Validation;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess;
 using MbDevelopment.Greenmaster.DataAccess.Base;

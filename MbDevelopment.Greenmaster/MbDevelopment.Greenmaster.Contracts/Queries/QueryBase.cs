@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries;
+namespace MbDevelopment.Greenmaster.Contracts.Queries;
 
 public class QueryBase<T> : IRequest<T> where T : class
 {
