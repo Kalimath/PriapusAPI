@@ -7,7 +7,7 @@ public static class TaxonomySeeders
 {
     public static void SeedTaxonKingdoms(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TaxonKingdom>().HasData(new List<TaxonKingdom>()
+        modelBuilder.Entity<TaxonKingdom>().HasData(new List<TaxonKingdom>
         {
             new ()
             {

@@ -8,7 +8,7 @@ public class KingdomMapper(IHashids hashids) : IMapper<TaxonKingdom, KingdomDto>
 {
     public KingdomDto? ToDto(TaxonKingdom model)
     {
-        return new KingdomDto()
+        return new KingdomDto
         {
             Id = hashids.Encode(model.Id),
             Name = model.LatinName,
@@ -18,7 +18,7 @@ public class KingdomMapper(IHashids hashids) : IMapper<TaxonKingdom, KingdomDto>
 
     public TaxonKingdom FromDto(KingdomDto kingdomDto)
     {
-        return new TaxonKingdom()
+        return new TaxonKingdom
         {
             Id = hashids.DecodeSingle(kingdomDto.Id),
             LatinName = kingdomDto.Name,

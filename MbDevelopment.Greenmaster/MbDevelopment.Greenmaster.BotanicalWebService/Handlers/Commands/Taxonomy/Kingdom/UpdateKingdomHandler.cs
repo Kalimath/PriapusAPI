@@ -2,6 +2,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
@@ -9,11 +10,11 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxono
 
 public class UpdateKingdomHandler : IRequestHandler<UpdateKingdomCommand, KingdomDto>
 {
-    private readonly IRepository<Core.Taxonomy.TaxonKingdom> _repository;
+    private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
     private readonly KingdomMapper _mapper;
 
-    public UpdateKingdomHandler(IRepository<Core.Taxonomy.TaxonKingdom> repository, IHashids hashids)
+    public UpdateKingdomHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
@@ -35,7 +36,7 @@ public class UpdateKingdomHandler : IRequestHandler<UpdateKingdomCommand, Kingdo
         return _mapper.ToDto(kingdom)!;
     }
 
-    private static void UpdateModel(Core.Taxonomy.TaxonKingdom kingdom, UpdateKingdomCommand request)
+    private static void UpdateModel(TaxonKingdom kingdom, UpdateKingdomCommand request)
     {
         kingdom.LatinName = request.Name;
         kingdom.Description = request.Description;

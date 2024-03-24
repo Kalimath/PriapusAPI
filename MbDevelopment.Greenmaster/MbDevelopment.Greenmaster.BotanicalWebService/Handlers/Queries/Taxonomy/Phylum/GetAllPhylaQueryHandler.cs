@@ -2,6 +2,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Phylum;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,10 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonom
 
 public class GetAllPhylaQueryHandler : IRequestHandler<GetAllPhylaQuery, IEnumerable<PhylumDto>>
 {
-    private readonly IRepository<Core.Taxonomy.TaxonPhylum> _repository;
+    private readonly IRepository<TaxonPhylum> _repository;
     private readonly PhylumMapper _phylumMapper;
 
-    public GetAllPhylaQueryHandler(IRepository<Core.Taxonomy.TaxonPhylum> repository, IHashids hashids)
+    public GetAllPhylaQueryHandler(IRepository<TaxonPhylum> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _phylumMapper = new PhylumMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));

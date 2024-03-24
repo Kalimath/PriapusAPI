@@ -76,6 +76,6 @@ public static class TaxonomyExamples
         LatinName = "Eudicotidae",
         Description = "Plants mainly characterized by having two seed leaves (cotyledons) upon germination. " +
                       "Eudicots include sunflower, dandelion, forget-me-not, cabbage, apple, buttercup, maple, and macadamia.",
-        Descendants = new List<ITaxonGroup> {}
+        Descendants = new List<ITaxonGroup>()
     };
 }

@@ -3,6 +3,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
@@ -10,11 +11,11 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonom
 
 public class GetKingdomByIdHandler : IRequestHandler<GetKingdomByIdQuery, KingdomDto>
 {
-    private readonly IRepository<Core.Taxonomy.TaxonKingdom> _repository;
+    private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
     private readonly KingdomMapper _kingdomMapper;
 
-    public GetKingdomByIdHandler(IRepository<Core.Taxonomy.TaxonKingdom> repository, IHashids hashids)
+    public GetKingdomByIdHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));

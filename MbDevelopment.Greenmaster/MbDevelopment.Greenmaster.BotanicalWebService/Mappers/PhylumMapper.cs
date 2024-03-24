@@ -18,7 +18,7 @@ public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
     public PhylumDto? ToDto(TaxonPhylum model)
     {
         var kingdomDto = _kingdomMapper.ToDto(model.Kingdom);
-        return new PhylumDto()
+        return new PhylumDto
         {
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
@@ -29,7 +29,7 @@ public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
 
     public TaxonPhylum FromDto(PhylumDto dto)
     {
-        return new TaxonPhylum()
+        return new TaxonPhylum
         {
             Id = _hashids.DecodeSingle(dto.Id),
             LatinName = dto.Name,

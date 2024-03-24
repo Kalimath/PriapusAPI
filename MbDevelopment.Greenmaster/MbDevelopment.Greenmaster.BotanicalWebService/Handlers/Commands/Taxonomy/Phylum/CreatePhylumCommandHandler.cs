@@ -3,6 +3,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Phylum;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
@@ -10,12 +11,12 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxono
 
 public class CreatePhylumCommandHandler : IRequestHandler<CreatePhylumCommand, PhylumDto>
 {
-    private readonly IRepository<Core.Taxonomy.TaxonPhylum> _phylumRepo;
-    private readonly IRepository<Core.Taxonomy.TaxonKingdom> _kingdomRepo;
+    private readonly IRepository<TaxonPhylum> _phylumRepo;
+    private readonly IRepository<TaxonKingdom> _kingdomRepo;
     private readonly IHashids _hashids;
     private readonly PhylumMapper _mapper;
 
-    public CreatePhylumCommandHandler(IRepository<Core.Taxonomy.TaxonPhylum> phylumRepo, IRepository<Core.Taxonomy.TaxonKingdom> kingdomRepo, IHashids hashids)
+    public CreatePhylumCommandHandler(IRepository<TaxonPhylum> phylumRepo, IRepository<TaxonKingdom> kingdomRepo, IHashids hashids)
     {
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _kingdomRepo = kingdomRepo ?? throw new ArgumentNullException(nameof(kingdomRepo));
@@ -28,7 +29,7 @@ public class CreatePhylumCommandHandler : IRequestHandler<CreatePhylumCommand, P
         var decodedKingdomId = _hashids.DecodeSingle(request.KingdomId);
         var kingdom = await _kingdomRepo.GetAsync(x => x.Id == decodedKingdomId, cancellationToken);
         if (kingdom == null) throw new ValidationException("Kingdom not found");
-        var phylum = new Core.Taxonomy.TaxonPhylum()
+        var phylum = new TaxonPhylum
         {
             LatinName = request.Name,
             Description = request.Description,

@@ -7,9 +7,9 @@ public class TaxonSpecieTests
     [Fact]
     public void ShouldReturn_CorrectFullLatinName_WithEmptyCultivar()
     {
-        var specie = new TaxonSpecies()
+        var specie = new TaxonSpecies
         {
-            Genus = new TaxonGenus()
+            Genus = new TaxonGenus
             {
                 LatinName = "genus"
             },
@@ -23,9 +23,9 @@ public class TaxonSpecieTests
     [Fact]
     public void ShouldReturn_CorrectFullLatinName_WithCultivar()
     {
-        var specie = new TaxonSpecies()
+        var specie = new TaxonSpecies
         {
-            Genus = new TaxonGenus()
+            Genus = new TaxonGenus
             {
                 LatinName = "genus"
             },

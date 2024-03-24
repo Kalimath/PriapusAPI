@@ -2,6 +2,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Phylum;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
@@ -9,11 +10,11 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxono
 
 public class DeletePhylumCommandHandler : IRequestHandler<DeletePhylumCommand, PhylumDto>
 {
-    private readonly IRepository<Core.Taxonomy.TaxonPhylum> _phylumRepo;
+    private readonly IRepository<TaxonPhylum> _phylumRepo;
     private readonly IHashids _hashids;
     private readonly PhylumMapper _mapper;
 
-    public DeletePhylumCommandHandler(IRepository<Core.Taxonomy.TaxonPhylum> phylumRepo, IHashids hashids)
+    public DeletePhylumCommandHandler(IRepository<TaxonPhylum> phylumRepo, IHashids hashids)
     {
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
@@ -28,7 +29,7 @@ public class DeletePhylumCommandHandler : IRequestHandler<DeletePhylumCommand, P
         
         _phylumRepo.Delete(phylum);
         await _phylumRepo.SaveChangesAsync(cancellationToken);
-        return new PhylumDto()
+        return new PhylumDto
         {
             Id = request.Id,
             Name = phylum.LatinName,

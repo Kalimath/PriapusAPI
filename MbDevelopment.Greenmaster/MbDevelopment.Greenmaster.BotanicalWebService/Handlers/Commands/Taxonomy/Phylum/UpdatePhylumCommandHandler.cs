@@ -3,6 +3,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Phylum;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
@@ -10,12 +11,12 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxono
 
 public class UpdatePhylumCommandHandler : IRequestHandler<UpdatePhylumCommand, PhylumDto>
 {
-    private readonly IRepository<Core.Taxonomy.TaxonPhylum> _phylumRepo;
-    private readonly IRepository<Core.Taxonomy.TaxonKingdom> _kingdomRepo;
+    private readonly IRepository<TaxonPhylum> _phylumRepo;
+    private readonly IRepository<TaxonKingdom> _kingdomRepo;
     private readonly IHashids _hashids;
     private readonly PhylumMapper _mapper;
     
-    public UpdatePhylumCommandHandler(IRepository<Core.Taxonomy.TaxonPhylum> phylumRepo, IRepository<Core.Taxonomy.TaxonKingdom> kingdomRepo, IHashids hashids)
+    public UpdatePhylumCommandHandler(IRepository<TaxonPhylum> phylumRepo, IRepository<TaxonKingdom> kingdomRepo, IHashids hashids)
     {
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _kingdomRepo = kingdomRepo ?? throw new ArgumentNullException(nameof(kingdomRepo));
@@ -42,7 +43,7 @@ public class UpdatePhylumCommandHandler : IRequestHandler<UpdatePhylumCommand, P
         return _mapper.ToDto(phylum)!;
     }
 
-    private static void UpdateModel(Core.Taxonomy.TaxonPhylum phylum, UpdatePhylumCommand request, Core.Taxonomy.TaxonKingdom kingdom)
+    private static void UpdateModel(TaxonPhylum phylum, UpdatePhylumCommand request, TaxonKingdom kingdom)
     {
         phylum.LatinName = request.Name;
         phylum.Description = request.Description;
