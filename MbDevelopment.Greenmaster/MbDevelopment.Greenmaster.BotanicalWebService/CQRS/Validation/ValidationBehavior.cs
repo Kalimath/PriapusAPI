@@ -1,25 +1,19 @@
 using FluentValidation;
-using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Validation;
 
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse> where TResponse : ApiResponse, new()
+public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
+    : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
+    
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
-    {
-        _validators = validators;
-    }
-
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
         //pre
         var context = new ValidationContext<TRequest>(request);
-        var failures = _validators
+        var failures = validators
             .Select(x => x.Validate(context))
             .SelectMany(x => x.Errors)
             .Where(x => x != null)
@@ -27,14 +21,10 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
 
         if (failures.Count != 0)
         {
-            return new TResponse()
-            {
-                Ok = false,
-                Error = string.Join(" | ", failures.Select(x => x.ErrorMessage))
-            };
+            throw new ValidationException("Failed to validate", failures);
         }
 
         return await next();
-        //TODO: post
+        //post
     }
 }

@@ -1,47 +1,48 @@
+using System.Net;
 using MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Commands;
 using MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
-using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
-using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+// ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 
 [Route(KingdomApi.Route)]
 [ApiController]
-public class KingdomController : ControllerBase
+public class KingdomController(IMediator mediator) : ApiControllerBase(mediator)
 {
-    private readonly IMediator _mediator;
-
-    public KingdomController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpGet("{id}")]
-    public async Task<ApiResponse<KingdomDto>> Get([FromRoute] string id)
+    public async Task<IActionResult> Get([FromRoute] string id)
     {
-        //TODO: validation pipeline
-        var query = new GetKingdomByIdQuery(id);
-        var result = await _mediator.Send(query);
-        
-        return result;
+        if (string.IsNullOrWhiteSpace(id)) return BadRequest("id is required");
+        return await ExecuteAsync(new GetKingdomByIdQuery(id));
     }
 
     [HttpGet]
-    public async Task<ApiResponse<IEnumerable<KingdomDto>>> GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var query = new GetAllKingdomsQuery();
-        var result = await _mediator.Send(query);
-        return result;
+        return await ExecuteAsync(new GetAllKingdomsQuery());
     }
 
     [HttpPost]
-    public async Task<ApiResponse<KingdomDto>> Create([FromBody] CreateKingdomRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateKingdomCommand command)
     {
-        var query = new CreateKingdomCommand(request);
-        var result = await _mediator.Send(query);
-        return result;
+        if (command == null) return BadRequest("Command cannot be null.");
+        return await ExecutePost(command, HttpStatusCode.Created);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateKingdomCommand command)
+    {
+        if (command == null) return BadRequest("Command cannot be null.");
+        return await ExecutePut(command);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody] DeleteKingdomCommand command)
+    {
+        if (command == null) return BadRequest("Command cannot be null.");
+        return await ExecutePut(command);
     }
 }

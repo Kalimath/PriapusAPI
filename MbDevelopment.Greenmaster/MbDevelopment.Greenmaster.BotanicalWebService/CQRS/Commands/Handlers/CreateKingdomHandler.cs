@@ -1,31 +1,29 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
-using MbDevelopment.Greenmaster.DataAccess;
+using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Commands.Handlers;
 
-public class CreateKingdomHandler : IRequestHandler<CreateKingdomCommand, ApiResponse<KingdomDto>>
+public class CreateKingdomHandler : IRequestHandler<CreateKingdomCommand, KingdomDto>
 {
-    private readonly BotanicalContext _context;
+    private readonly IRepository<TaxonKingdom> _repository;
     private readonly KingdomMapper _mapper;
     
-    public CreateKingdomHandler(BotanicalContext context, IHashids hashids)
+    public CreateKingdomHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
-        _context = context;
+        _repository = repository;
         _mapper = new KingdomMapper(hashids);
     }
-    public async Task<ApiResponse<KingdomDto>> Handle(CreateKingdomCommand request, CancellationToken cancellationToken)
+    public async Task<KingdomDto> Handle(CreateKingdomCommand request, CancellationToken cancellationToken)
     {
-        var createdItem = _context.TaxonKingdoms.Add(new TaxonKingdom(){LatinName = request.LatinName, Description = request.Description});
-        await _context.SaveChangesAsync(cancellationToken);
-        return new ApiResponse<KingdomDto>()
-        {
-            Ok = true,
-            Data = _mapper.ToDto(createdItem.Entity)
-        };
+        _repository.Add(new TaxonKingdom(){LatinName = request.LatinName, Description = request.Description});
+        await _repository.SaveChangesAsync(cancellationToken);
+        
+        var createdItem = _repository.Query(x => x.LatinName == request.LatinName && x.Description == request.Description).FirstOrDefault();
+        if (createdItem == null) throw new Exception("Failed to get created kingdom");
+        return _mapper.ToDto(createdItem)!;
     }
 }

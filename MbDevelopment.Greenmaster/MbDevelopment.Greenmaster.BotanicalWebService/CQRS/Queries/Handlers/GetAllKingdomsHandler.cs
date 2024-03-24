@@ -1,30 +1,28 @@
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess;
+using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries.Handlers;
 
-public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, ApiResponse<IEnumerable<KingdomDto>>>
+public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
 {
-    private readonly BotanicalContext _context;
-    private readonly IHashids _hashids;
+    private readonly IRepository<TaxonKingdom> _repository;
+    private readonly KingdomMapper _mapper;
     
-    public GetAllKingdomsHandler(BotanicalContext context, IHashids hashids)
+    public GetAllKingdomsHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
-        _context = context;
-        _hashids = hashids;
+        _repository = repository;
+        _mapper = new KingdomMapper(hashids); 
     }
     
-    public async Task<ApiResponse<IEnumerable<KingdomDto>>> Handle(GetAllKingdomsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<KingdomDto>> Handle(GetAllKingdomsQuery request, CancellationToken cancellationToken)
     {
-        var kingdoms = await _context.TaxonKingdoms.Select(x => new KingdomDto(){HashedId = _hashids.Encode(x.Id), Name = x.LatinName, Description = x.Description}).ToListAsync(cancellationToken);
-        return new ApiResponse<IEnumerable<KingdomDto>>()
-        {
-            Ok = true,
-            Data = kingdoms
-        };
+        return (await _repository.All().Select(x => _mapper.ToDto(x)).ToListAsync(cancellationToken))!;
     }
 }

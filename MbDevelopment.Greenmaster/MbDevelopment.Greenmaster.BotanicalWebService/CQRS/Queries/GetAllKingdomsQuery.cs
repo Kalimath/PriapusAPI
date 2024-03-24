@@ -4,6 +4,6 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries;
 
-public class GetAllKingdomsQuery : IRequest<ApiResponse<IEnumerable<KingdomDto>>>
+public class GetAllKingdomsQuery : IRequest<IEnumerable<KingdomDto>>
 {
 }

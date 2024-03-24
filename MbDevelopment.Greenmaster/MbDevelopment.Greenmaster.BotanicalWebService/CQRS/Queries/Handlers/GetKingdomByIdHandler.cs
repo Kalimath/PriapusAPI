@@ -1,37 +1,37 @@
+using FluentValidation;
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Dtos;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess;
+using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.CQRS.Queries.Handlers;
 
-public class GetKingdomByIdHandler : IRequestHandler<GetKingdomByIdQuery, ApiResponse<KingdomDto>>
+public class GetKingdomByIdHandler : IRequestHandler<GetKingdomByIdQuery, KingdomDto>
 {
-    private readonly BotanicalContext _context;
+    private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
     private readonly KingdomMapper _kingdomMapper;
 
-    public GetKingdomByIdHandler(BotanicalContext context, IHashids hashids)
+    public GetKingdomByIdHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
-        _context = context;
+        _repository = repository;
         _hashids = hashids;
         _kingdomMapper = new KingdomMapper(hashids);
         
     }
 
-    public async Task<ApiResponse<KingdomDto>> Handle(GetKingdomByIdQuery request, CancellationToken cancellationToken)
+    public async Task<KingdomDto> Handle(GetKingdomByIdQuery request, CancellationToken cancellationToken)
     {
-        var notFound = new ApiResponse<KingdomDto>(){Ok = false, Error = "Kingdom not found"};
         
-        var rawId = _hashids.Decode(request.Id);
-        if (rawId.Length == 0) return notFound;
+        var rawId = _hashids.DecodeSingle(request.Id);
         
-        var kingdom = await _context.TaxonKingdoms.FirstOrDefaultAsync(x => x.Id == rawId.First(), cancellationToken);
-        if (kingdom == null) return notFound;
+        var kingdom = await _repository.GetAsync(x => x.Id == rawId, cancellationToken);
         
-        return new ApiResponse<KingdomDto>() { Ok = true, Data = _kingdomMapper.ToDto(kingdom) };
+        return (kingdom == null ? throw new ValidationException("Kingdom not found") : _kingdomMapper.ToDto(kingdom))!;
     }
 }

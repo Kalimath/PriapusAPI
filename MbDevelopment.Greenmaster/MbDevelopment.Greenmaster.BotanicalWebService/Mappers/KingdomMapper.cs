@@ -6,7 +6,7 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 
 public class KingdomMapper(IHashids hashids)
 {
-    public KingdomDto ToDto(TaxonKingdom kingdom)
+    public KingdomDto? ToDto(TaxonKingdom kingdom)
     {
         return new KingdomDto()
         {

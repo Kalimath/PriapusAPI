@@ -13,6 +13,7 @@ services.AddSingleton<IHashids>(_ => new Hashids(".Wd#9?1HJGT4BW/Mel", 11));
 services.AddCqrs();
 services.AddValidation();
 services.AddControllers();
+services.AddRepositories();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(opts =>
 {
