@@ -12,8 +12,6 @@ public class TaxonPhylum : ITaxonGroup
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    
-    public Guid TaxonKingdomId { get; set; } // Required foreign key property
     public TaxonKingdom Kingdom { get; set; }
     public string LatinName { get; set; }
     public string Description { get; set; }
