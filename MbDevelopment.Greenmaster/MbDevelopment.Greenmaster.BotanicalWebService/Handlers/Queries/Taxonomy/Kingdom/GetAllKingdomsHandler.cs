@@ -1,12 +1,12 @@
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
-using MbDevelopment.Greenmaster.Contracts.Queries.TaxonKingdom;
+using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.TaxonKingdom;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonomy.Kingdom;
 
 public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
 {
@@ -15,8 +15,8 @@ public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, IEnume
     
     public GetAllKingdomsHandler(IRepository<Core.Taxonomy.TaxonKingdom> repository, IHashids hashids)
     {
-        _repository = repository;
-        _mapper = new KingdomMapper(hashids); 
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids)); 
     }
     
     public async Task<IEnumerable<KingdomDto>> Handle(GetAllKingdomsQuery request, CancellationToken cancellationToken)

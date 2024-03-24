@@ -1,11 +1,11 @@
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
-using MbDevelopment.Greenmaster.Contracts.Commands.TaxonKingdom;
+using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.TaxonKingdom;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxonomy.Kingdom;
 
 public class CreateKingdomHandler : IRequestHandler<CreateKingdomCommand, KingdomDto>
 {
@@ -14,8 +14,8 @@ public class CreateKingdomHandler : IRequestHandler<CreateKingdomCommand, Kingdo
     
     public CreateKingdomHandler(IRepository<Core.Taxonomy.TaxonKingdom> repository, IHashids hashids)
     {
-        _repository = repository;
-        _mapper = new KingdomMapper(hashids);
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
     public async Task<KingdomDto> Handle(CreateKingdomCommand request, CancellationToken cancellationToken)
     {

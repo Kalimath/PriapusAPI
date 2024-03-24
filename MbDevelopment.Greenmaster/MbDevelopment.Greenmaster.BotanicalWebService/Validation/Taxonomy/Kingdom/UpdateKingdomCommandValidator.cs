@@ -1,7 +1,7 @@
 using FluentValidation;
-using MbDevelopment.Greenmaster.Contracts.Commands.TaxonKingdom;
+using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.TaxonKingdom;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.Taxonomy.Kingdom;
 
 public class UpdateKingdomCommandValidator : AbstractValidator<UpdateKingdomCommand>
 {

@@ -26,6 +26,7 @@ public static class RegisterGreenmaster
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IRepository<TaxonKingdom>, BotanicalRepository<TaxonKingdom>>();
+        services.AddScoped<IRepository<TaxonPhylum>, BotanicalRepository<TaxonPhylum>>();
         return services;
     }
 }

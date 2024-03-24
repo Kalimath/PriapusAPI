@@ -3,6 +3,7 @@ using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 {
     [DbContext(typeof(BotanicalContext))]
-    partial class BotanicalContextModelSnapshot : ModelSnapshot
+    [Migration("20240324203928_AddedKingdomIdFKToTaxonPhylum")]
+    partial class AddedKingdomIdFKToTaxonPhylum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,7 +102,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.ToTable("Taxonomy.Genera");
                 });
 
-            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.Kingdom", b =>
+            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonKingdom", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,7 +175,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.ToTable("Taxonomy.Orders");
                 });
 
-            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.Phylum", b =>
+            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonPhylum", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -230,7 +233,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 
             modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonClass", b =>
                 {
-                    b.HasOne("MbDevelopment.Greenmaster.Core.Taxonomy.Phylum", "Phylum")
+                    b.HasOne("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonPhylum", "Phylum")
                         .WithMany("RelatedClasses")
                         .HasForeignKey("PhylumId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -272,9 +275,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.Phylum", b =>
+            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonPhylum", b =>
                 {
-                    b.HasOne("MbDevelopment.Greenmaster.Core.Taxonomy.Kingdom", "Kingdom")
+                    b.HasOne("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonKingdom", "Kingdom")
                         .WithMany("RelatedPhyla")
                         .HasForeignKey("KingdomId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -309,7 +312,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.Navigation("RelatedSpecies");
                 });
 
-            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.Kingdom", b =>
+            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonKingdom", b =>
                 {
                     b.Navigation("RelatedPhyla");
                 });
@@ -319,7 +322,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                     b.Navigation("RelatedFamilies");
                 });
 
-            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.Phylum", b =>
+            modelBuilder.Entity("MbDevelopment.Greenmaster.Core.Taxonomy.TaxonPhylum", b =>
                 {
                     b.Navigation("RelatedClasses");
                 });

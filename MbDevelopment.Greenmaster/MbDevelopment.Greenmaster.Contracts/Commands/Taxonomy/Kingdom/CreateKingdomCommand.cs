@@ -1,6 +1,6 @@
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 
-namespace MbDevelopment.Greenmaster.Contracts.Commands.TaxonKingdom;
+namespace MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
 
 public class CreateKingdomCommand : CommandBase<KingdomDto>
 {

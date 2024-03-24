@@ -49,16 +49,19 @@ public class ApiControllerBase : ControllerBase
         }
         catch (NullReferenceException nex)
         {
+            Console.WriteLine(nex);
             _statusCode = HttpStatusCode.BadRequest;
             response = new Response<T>(_statusCode, "null reference", new [] { nex.Message });
         }
         catch (ValidationException vex)
         {
+            Console.WriteLine(vex);
             _statusCode = HttpStatusCode.BadRequest;
             response = new Response<T>(_statusCode, vex.Message, vex.Errors.Select(failure => failure.ErrorMessage).ToArray());
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex);
             _statusCode = HttpStatusCode.InternalServerError;
             response = new Response<T>(_statusCode, "Internal server error", new [] { ex.Message });
         }

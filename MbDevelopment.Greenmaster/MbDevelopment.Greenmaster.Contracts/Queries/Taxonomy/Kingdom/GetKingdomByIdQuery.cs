@@ -1,6 +1,6 @@
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 
-namespace MbDevelopment.Greenmaster.Contracts.Queries.TaxonKingdom;
+namespace MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
 
 public class GetKingdomByIdQuery(string id) : QueryBase<KingdomDto>
 {

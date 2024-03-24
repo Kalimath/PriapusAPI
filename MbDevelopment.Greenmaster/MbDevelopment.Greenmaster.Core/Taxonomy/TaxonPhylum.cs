@@ -12,9 +12,10 @@ public class TaxonPhylum : ITaxonGroup
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public TaxonKingdom Kingdom { get; set; }
     public string LatinName { get; set; }
     public string Description { get; set; }
+    public int KingdomId { get; set; }
+    public TaxonKingdom Kingdom { get; set; }
     
     public ICollection<TaxonClass> RelatedClasses { get; set; } = new List<TaxonClass>(); // Collection navigation containing dependents
 }

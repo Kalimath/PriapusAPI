@@ -1,7 +1,7 @@
 using FluentValidation;
-using MbDevelopment.Greenmaster.Contracts.Queries.TaxonKingdom;
+using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.TaxonKingdom;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.Taxonomy.Kingdom;
 
 public class GetKingdomByIdQueryValidator : AbstractValidator<GetKingdomByIdQuery>
 {
