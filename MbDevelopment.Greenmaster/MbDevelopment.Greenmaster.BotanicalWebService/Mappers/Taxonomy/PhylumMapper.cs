@@ -2,28 +2,25 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 
 public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
 {
-    private readonly KingdomMapper _kingdomMapper;
     private readonly IHashids _hashids;
 
     public PhylumMapper(IHashids hashids)
     {
         _hashids = hashids;
-        _kingdomMapper = new KingdomMapper(hashids);
     }
 
     public PhylumDto? ToDto(TaxonPhylum model)
     {
-        var kingdomDto = _kingdomMapper.ToDto(model.Kingdom);
         return new PhylumDto
         {
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description,
-            Kingdom = kingdomDto!
+            Kingdom = MapParentTaxon(model)!
         };
     }
 
@@ -35,6 +32,17 @@ public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
             LatinName = dto.Name,
             Description = dto.Description
             //Kingdom not mapped
+        };
+    }
+
+    private KingdomDto MapParentTaxon(TaxonPhylum model)
+    {
+        return new KingdomDto
+        {
+            Id = _hashids.Encode(model.Id),
+            Name = model.LatinName,
+            Description = model.Description
+            
         };
     }
 }

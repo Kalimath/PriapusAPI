@@ -2,7 +2,7 @@ using HashidsNet;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 
 public class KingdomMapper(IHashids hashids) : IMapper<TaxonKingdom, KingdomDto>
 {

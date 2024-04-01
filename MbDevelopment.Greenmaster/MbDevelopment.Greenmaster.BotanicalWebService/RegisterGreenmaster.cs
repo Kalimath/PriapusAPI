@@ -27,6 +27,7 @@ public static class RegisterGreenmaster
     {
         services.AddScoped<IRepository<TaxonKingdom>, BotanicalRepository<TaxonKingdom>>();
         services.AddScoped<IRepository<TaxonPhylum>, BotanicalRepository<TaxonPhylum>>();
+        services.AddScoped<IRepository<TaxonClass>, BotanicalRepository<TaxonClass>>();
         return services;
     }
 }

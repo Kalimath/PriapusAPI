@@ -1,6 +1,6 @@
 using FluentValidation;
 using HashidsNet;
-using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
 using MbDevelopment.Greenmaster.Core.Taxonomy;

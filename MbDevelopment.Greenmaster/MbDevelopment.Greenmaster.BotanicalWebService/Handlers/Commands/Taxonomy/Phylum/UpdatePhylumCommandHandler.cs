@@ -1,6 +1,6 @@
 using FluentValidation;
 using HashidsNet;
-using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Phylum;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
@@ -29,18 +29,18 @@ public class UpdatePhylumCommandHandler : IRequestHandler<UpdatePhylumCommand, P
         var decodedId = _hashids.DecodeSingle(request.Id);
         var decodedKingdomId = _hashids.DecodeSingle(request.KingdomId);
        
-        var phylum = await _phylumRepo.GetAsync(k => k.Id == decodedId, cancellationToken);
-        if (phylum == null) throw new ValidationException($"Phylum with id {request.Id} not found");
+        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == decodedId, cancellationToken);
+        if (requestedPhylum == null) throw new ValidationException($"Phylum with id {request.Id} not found");
        
-        var kingdom = await _kingdomRepo.GetAsync(k => k.Id == decodedKingdomId, cancellationToken);
-        if (kingdom == null) throw new ValidationException($"Kingdom with id {request.KingdomId}");
+        var requestedKingdom = await _kingdomRepo.GetAsync(k => k.Id == decodedKingdomId, cancellationToken);
+        if (requestedKingdom == null) throw new ValidationException($"Kingdom with id {request.KingdomId}");
        
-        UpdateModel(phylum, request, kingdom);
+        UpdateModel(requestedPhylum, request, requestedKingdom);
 
-        _phylumRepo.Update(phylum);
+        _phylumRepo.Update(requestedPhylum);
         await _phylumRepo.SaveChangesAsync(cancellationToken);
        
-        return _mapper.ToDto(phylum)!;
+        return _mapper.ToDto(requestedPhylum)!;
     }
 
     private static void UpdateModel(TaxonPhylum phylum, UpdatePhylumCommand request, TaxonKingdom kingdom)

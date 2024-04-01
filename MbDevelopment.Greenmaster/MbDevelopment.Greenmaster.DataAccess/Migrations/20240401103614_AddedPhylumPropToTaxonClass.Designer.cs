@@ -3,6 +3,7 @@ using MbDevelopment.Greenmaster.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MbDevelopment.Greenmaster.DataAccess.Migrations
 {
     [DbContext(typeof(BotanicalContext))]
-    partial class BotanicalContextModelSnapshot : ModelSnapshot
+    [Migration("20240401103614_AddedPhylumPropToTaxonClass")]
+    partial class AddedPhylumPropToTaxonClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

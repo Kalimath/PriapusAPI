@@ -26,6 +26,8 @@ public class KingdomController(IMediator mediator) : ApiControllerBase(mediator)
     {
         return await ExecuteAsync(new GetAllKingdomsQuery());
     }
+    
+    //TODO: Implement GET Related
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateKingdomCommand command)

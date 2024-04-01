@@ -1,5 +1,5 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
 using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
@@ -25,15 +25,15 @@ public class UpdateKingdomHandler : IRequestHandler<UpdateKingdomCommand, Kingdo
     {
         //validation in pipeline
         var decodedId = _hashids.DecodeSingle(request.Id);
-        var kingdom = await _repository.GetAsync(k => k.Id == decodedId, cancellationToken);
-        if (kingdom == null) throw new KeyNotFoundException($"Kingdom with id {request.Id} not found");
+        var requestedKingdom = await _repository.GetAsync(k => k.Id == decodedId, cancellationToken);
+        if (requestedKingdom == null) throw new KeyNotFoundException($"Kingdom with id {request.Id} not found");
         
-        UpdateModel(kingdom, request);
+        UpdateModel(requestedKingdom, request);
 
-        _repository.Update(kingdom);
+        _repository.Update(requestedKingdom);
         await _repository.SaveChangesAsync(cancellationToken);
         
-        return _mapper.ToDto(kingdom)!;
+        return _mapper.ToDto(requestedKingdom)!;
     }
 
     private static void UpdateModel(TaxonKingdom kingdom, UpdateKingdomCommand request)

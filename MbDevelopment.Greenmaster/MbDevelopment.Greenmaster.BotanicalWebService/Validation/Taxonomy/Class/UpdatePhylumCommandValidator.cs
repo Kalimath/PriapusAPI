@@ -1,11 +1,11 @@
 using FluentValidation;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Class;
 
-namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.Taxonomy.Phylum;
+namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.Taxonomy.Class;
 
-public class UpdatePhylumCommandValidator : AbstractValidator<UpdateClassCommand>
+public class UpdateClassCommandValidator : AbstractValidator<UpdateClassCommand>
 {
-    public UpdatePhylumCommandValidator()
+    public UpdateClassCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.Name).NotEmpty();
