@@ -9,6 +9,7 @@ public class TaxonFamily : ITaxonGroup
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    public int OrderId { get; set; }
     public TaxonOrder Order { get; set; }
     public string LatinName { get; set; }
     public string Description { get; set; }

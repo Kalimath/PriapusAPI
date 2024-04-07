@@ -10,6 +10,7 @@ public class TaxonSpecies: ITaxonGroup, ISpecies
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    public int GenusId { get; set; }
     public TaxonGenus Genus { get; set; }
     public string LatinName { get; set; }
     public string FullLatinName => $"{Genus.LatinName.FirstCharToUpper()} {LatinName.FirstCharToUpper()}" + (!string.IsNullOrEmpty(Cultivar)?$" \'{Cultivar.ToTitleCase()}\'":"");
