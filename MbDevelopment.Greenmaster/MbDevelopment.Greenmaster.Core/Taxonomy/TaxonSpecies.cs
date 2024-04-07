@@ -13,7 +13,14 @@ public class TaxonSpecies: ITaxonGroup, ISpecies
     public int GenusId { get; set; }
     public TaxonGenus Genus { get; set; }
     public string LatinName { get; set; }
-    public string FullLatinName => $"{Genus.LatinName.FirstCharToUpper()} {LatinName.FirstCharToUpper()}" + (!string.IsNullOrEmpty(Cultivar)?$" \'{Cultivar.ToTitleCase()}\'":"");
-    public string Cultivar { get; set; }
     public string Description { get; set; }
+    
+    public string CommonName { get; set; } = string.Empty;
+    public string TrademarkName { get; set; } = string.Empty;
+    public string Cultivar { get; set; } = string.Empty;
+    public string FullLatinName => $"{Genus.LatinName.FirstCharToUpper()} {LatinName.FirstCharToUpper()}" + (!string.IsNullOrEmpty(Cultivar)?$" \'{Cultivar.ToTitleCase()}\'":"");
+    
+    //TODO: add characteristics properties
+    //TODO: add (max)dimensions properties
+    
 }

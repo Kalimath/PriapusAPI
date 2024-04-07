@@ -1,6 +1,6 @@
 namespace MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 
-public class PhylumApi
+public static class PhylumApi
 {
-    public const string Route = "greenmaster/api/v1/taxonomy/phyla";
+    public const string Route = "greenmaster/api/v1/taxonomy/phylum";
 }

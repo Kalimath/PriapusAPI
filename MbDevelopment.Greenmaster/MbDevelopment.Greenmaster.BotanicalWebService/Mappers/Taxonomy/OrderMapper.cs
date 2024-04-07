@@ -1,5 +1,5 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
@@ -20,7 +20,24 @@ public class OrderMapper : IMapper<TaxonOrder, OrderDto>
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description,
-            Class = new ClassDto(){Id = _hashids.Encode(model.ClassId)}
+            Class = new BasicTaxonDto()
+            {
+                Id = _hashids.Encode(model.ClassId),
+                Name = model.Class.LatinName,
+                Description = model.Class.Description
+            }
+        };
+    }
+
+    public BasicTaxonDto ToBasicDto(TaxonOrder model)
+    {
+        return new BasicTaxonDto
+        {
+            Id = _hashids.Encode(model.Id),
+            Name = model.LatinName,
+            Description = model.Description,
+            ParentTaxonId = _hashids.Encode(model.ClassId),
+            ParentTaxonType = nameof(model.Class)
         };
     }
 

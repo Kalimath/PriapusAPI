@@ -1,5 +1,5 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
@@ -21,6 +21,18 @@ public class ClassMapper : IMapper<TaxonClass, ClassDto>
             Name = model.LatinName,
             Description = model.Description,
             Phylum = MapParentTaxon(model)!
+        };
+    }
+
+    public BasicTaxonDto ToBasicDto(TaxonClass model)
+    {
+        return new BasicTaxonDto()
+        {
+            Id = _hashids.Encode(model.Id),
+            Name = model.LatinName,
+            Description = model.Description,
+            ParentTaxonId = _hashids.Encode(model.PhylumId),
+            ParentTaxonType = nameof(model.Phylum)
         };
     }
 

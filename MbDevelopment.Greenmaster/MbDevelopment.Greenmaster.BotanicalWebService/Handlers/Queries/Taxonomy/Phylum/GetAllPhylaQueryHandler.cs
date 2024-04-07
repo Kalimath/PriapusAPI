@@ -1,6 +1,6 @@
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
-using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Phylum;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;

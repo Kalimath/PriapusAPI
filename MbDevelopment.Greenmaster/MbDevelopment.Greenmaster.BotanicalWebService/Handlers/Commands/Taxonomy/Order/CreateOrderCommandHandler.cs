@@ -1,7 +1,7 @@
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Order;
-using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using MediatR;
@@ -26,7 +26,8 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Ord
     {
         var rawId = _hashids.DecodeSingle(request.ClassId);
         var requestedClass = await _classRepo.GetAsync(c => c.Id == rawId, cancellationToken) ?? throw new KeyNotFoundException("Class not found");
-        _repository.Add(new TaxonOrder {LatinName = request.Name, Description = request.Description, Class = requestedClass});
+        var newOrder = new TaxonOrder {LatinName = request.Name, Description = request.Description, Class = requestedClass};
+        _repository.Add(newOrder);
         await _repository.SaveChangesAsync(cancellationToken);
         
         var createdItem = _repository.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();

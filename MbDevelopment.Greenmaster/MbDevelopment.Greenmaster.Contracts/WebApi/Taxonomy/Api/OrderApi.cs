@@ -1,6 +1,6 @@
 namespace MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 
-public class OrderApi
+public static class OrderApi
 {
-    public const string Route = "greenmaster/api/v1/taxonomy/orders";
+    public const string Route = "greenmaster/api/v1/taxonomy/order";
 }

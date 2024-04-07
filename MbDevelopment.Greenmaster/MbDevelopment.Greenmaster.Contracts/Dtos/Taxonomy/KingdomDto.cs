@@ -1,4 +1,4 @@
-namespace MbDevelopment.Greenmaster.Contracts.Dtos;
+namespace MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 
 public class KingdomDto
 {

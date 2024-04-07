@@ -1,4 +1,4 @@
-using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
 

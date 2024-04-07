@@ -1,5 +1,5 @@
 using HashidsNet;
-using MbDevelopment.Greenmaster.Contracts.Dtos;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
@@ -20,6 +20,18 @@ public class KingdomMapper : IMapper<TaxonKingdom, KingdomDto>
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description
+        };
+    }
+
+    public BasicTaxonDto? ToBasicDto(TaxonKingdom model)
+    {
+        return new BasicTaxonDto()
+        {
+            Id = _hashids.Encode(model.Id),
+            Name = model.LatinName,
+            Description = model.Description,
+            ParentTaxonId = null!,
+            ParentTaxonType = null!
         };
     }
 
