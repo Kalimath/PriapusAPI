@@ -9,13 +9,13 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonomy.Kingdom;
 
-public class GetKingdomByIdHandler : IRequestHandler<GetKingdomByIdQuery, KingdomDto>
+public class GetKingdomByIdQueryHandler : IRequestHandler<GetKingdomByIdQuery, KingdomDto>
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
     private readonly KingdomMapper _kingdomMapper;
 
-    public GetKingdomByIdHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
+    public GetKingdomByIdQueryHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));

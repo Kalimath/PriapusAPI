@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonomy.Kingdom;
 
-public class GetAllKingdomsHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
+public class GetAllKingdomsQueryHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly KingdomMapper _mapper;
     
-    public GetAllKingdomsHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
+    public GetAllKingdomsQueryHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids)); 

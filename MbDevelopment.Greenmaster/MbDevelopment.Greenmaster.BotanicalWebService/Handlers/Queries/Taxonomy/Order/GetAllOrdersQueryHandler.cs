@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonomy.Order;
 
-public class GetAllOrdersHandler : IRequestHandler<GetAllOrdersQuery, IEnumerable<OrderDto>>
+public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, IEnumerable<OrderDto>>
 {
     private readonly IRepository<TaxonOrder> _repository;
     private readonly IMapper<TaxonOrder, OrderDto> _mapper;
     
-    public GetAllOrdersHandler(IRepository<TaxonOrder> repository, IMapper<TaxonOrder, OrderDto> mapper)
+    public GetAllOrdersQueryHandler(IRepository<TaxonOrder> repository, IMapper<TaxonOrder, OrderDto> mapper)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper)); 

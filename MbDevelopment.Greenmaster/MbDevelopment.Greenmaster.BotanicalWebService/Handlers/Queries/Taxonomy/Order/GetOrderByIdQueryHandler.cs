@@ -9,13 +9,13 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonomy.Order;
 
-public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, OrderDto>
+public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDto>
 {
     private readonly IRepository<TaxonOrder> _repository;
     private readonly IHashids _hashids;
     private readonly IMapper<TaxonOrder, OrderDto> _mapper;
 
-    public GetOrderByIdHandler(IRepository<TaxonOrder> repository, IMapper<TaxonOrder, OrderDto> mapper, IHashids hashids)
+    public GetOrderByIdQueryHandler(IRepository<TaxonOrder> repository, IMapper<TaxonOrder, OrderDto> mapper, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
