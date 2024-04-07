@@ -5,5 +5,10 @@ namespace MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
 
 public class DeleteKingdomCommand : IRequest<KingdomDto>
 {
-    public string Id { get; set; }
+    public string Id { get; }
+    
+    public DeleteKingdomCommand(string id)
+    {
+        Id = id;
+    }
 }

@@ -14,6 +14,7 @@ services.AddCqrs();
 services.AddValidation();
 services.AddControllers();
 services.AddRepositories();
+services.AddMappers();
 services.AddSwaggerGen();
 services.AddDbContext<BotanicalContext>(opts =>
 {

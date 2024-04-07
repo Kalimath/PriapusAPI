@@ -5,5 +5,10 @@ namespace MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Class;
 
 public class DeleteClassCommand : IRequest<ClassDto>
 {
-    public string Id { get; set; }
+    public string Id { get; }
+    
+    public DeleteClassCommand(string id)
+    {
+        Id = id;
+    }
 }

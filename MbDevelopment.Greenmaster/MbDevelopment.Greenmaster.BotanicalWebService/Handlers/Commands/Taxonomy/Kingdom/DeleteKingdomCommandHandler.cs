@@ -8,13 +8,13 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxonomy.Kingdom;
 
-public class DeleteKingdomHandler : IRequestHandler<DeleteKingdomCommand, KingdomDto>
+public class DeleteKingdomCommandHandler : IRequestHandler<DeleteKingdomCommand, KingdomDto>
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
     private readonly KingdomMapper _mapper;
 
-    public DeleteKingdomHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
+    public DeleteKingdomCommandHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
@@ -23,8 +23,8 @@ public class DeleteKingdomHandler : IRequestHandler<DeleteKingdomCommand, Kingdo
     
     public async Task<KingdomDto> Handle(DeleteKingdomCommand request, CancellationToken cancellationToken)
     {
-        var decodedId = _hashids.DecodeSingle(request.Id);
-        var kingdom = await _repository.GetAsync(i => i.Id == decodedId, cancellationToken);
+        var rawId = _hashids.DecodeSingle(request.Id);
+        var kingdom = await _repository.GetAsync(i => i.Id == rawId, cancellationToken);
         if (kingdom == null) throw new KeyNotFoundException($"Kingdom with id {request.Id} not found");
         
         _repository.Delete(kingdom);

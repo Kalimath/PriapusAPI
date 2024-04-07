@@ -23,6 +23,7 @@ public class PhylumController(IMediator mediator) : ApiControllerBase(mediator)
     }
     
     //TODO: Implement GET Related
+    //TODO: check for existence of item at creation and update
     
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePhylumCommand command)

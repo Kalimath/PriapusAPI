@@ -26,13 +26,13 @@ public class UpdatePhylumCommandHandler : IRequestHandler<UpdatePhylumCommand, P
     
     public async Task<PhylumDto> Handle(UpdatePhylumCommand request, CancellationToken cancellationToken)
     {
-        var decodedId = _hashids.DecodeSingle(request.Id);
-        var decodedKingdomId = _hashids.DecodeSingle(request.KingdomId);
+        var rawPhylumId = _hashids.DecodeSingle(request.Id);
+        var rawKingdomId = _hashids.DecodeSingle(request.KingdomId);
        
-        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == decodedId, cancellationToken);
+        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == rawPhylumId, cancellationToken);
         if (requestedPhylum == null) throw new ValidationException($"Phylum with id {request.Id} not found");
        
-        var requestedKingdom = await _kingdomRepo.GetAsync(k => k.Id == decodedKingdomId, cancellationToken);
+        var requestedKingdom = await _kingdomRepo.GetAsync(k => k.Id == rawKingdomId, cancellationToken);
         if (requestedKingdom == null) throw new ValidationException($"Kingdom with id {request.KingdomId}");
        
         UpdateModel(requestedPhylum, request, requestedKingdom);

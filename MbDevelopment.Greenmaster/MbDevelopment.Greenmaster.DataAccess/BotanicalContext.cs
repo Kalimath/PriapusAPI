@@ -1,6 +1,6 @@
 ﻿using MbDevelopment.Greenmaster.Core.Taxonomy;
-using MbDevelopment.Greenmaster.DataAccess.Seeders;
 using Microsoft.EntityFrameworkCore;
+using static MbDevelopment.Greenmaster.DataAccess.Seeders.TaxonomySeeders;
 
 namespace MbDevelopment.Greenmaster.DataAccess;
 
@@ -10,7 +10,7 @@ public class BotanicalContext(DbContextOptions<BotanicalContext> options) : DbCo
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        TaxonomySeeders.SeedTaxonKingdoms(modelBuilder);
+        SeedTaxonomy(modelBuilder);
     }
     
     public DbSet<TaxonKingdom> TaxonKingdoms { get; set; } = null!;

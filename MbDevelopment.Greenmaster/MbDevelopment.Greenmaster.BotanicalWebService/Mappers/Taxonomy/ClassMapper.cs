@@ -39,9 +39,7 @@ public class ClassMapper : IMapper<TaxonClass, ClassDto>
     {
         return new PhylumDto
         {
-            Id = _hashids.Encode(model.PhylumId),
-            Name = model.Phylum.LatinName,
-            Description = model.Phylum.Description
+            Id = _hashids.Encode(model.PhylumId)
         };
     }
 }

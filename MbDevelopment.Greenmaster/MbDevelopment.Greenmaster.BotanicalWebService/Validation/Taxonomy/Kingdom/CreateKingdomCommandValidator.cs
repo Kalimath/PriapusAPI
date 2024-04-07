@@ -7,7 +7,7 @@ public class CreateKingdomCommandValidator : AbstractValidator<CreateKingdomComm
 {
     public CreateKingdomCommandValidator()
     {
-        RuleFor(x => x.LatinName).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty();
         RuleFor(x => x.Description).NotEmpty();
     }
 }

@@ -8,13 +8,13 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxonomy.Kingdom;
 
-public class UpdateKingdomHandler : IRequestHandler<UpdateKingdomCommand, KingdomDto>
+public class UpdateKingdomCommandHandler : IRequestHandler<UpdateKingdomCommand, KingdomDto>
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
     private readonly KingdomMapper _mapper;
 
-    public UpdateKingdomHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
+    public UpdateKingdomCommandHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
@@ -24,8 +24,8 @@ public class UpdateKingdomHandler : IRequestHandler<UpdateKingdomCommand, Kingdo
     public async Task<KingdomDto> Handle(UpdateKingdomCommand request, CancellationToken cancellationToken)
     {
         //validation in pipeline
-        var decodedId = _hashids.DecodeSingle(request.Id);
-        var requestedKingdom = await _repository.GetAsync(k => k.Id == decodedId, cancellationToken);
+        var rawId = _hashids.DecodeSingle(request.Id);
+        var requestedKingdom = await _repository.GetAsync(k => k.Id == rawId, cancellationToken);
         if (requestedKingdom == null) throw new KeyNotFoundException($"Kingdom with id {request.Id} not found");
         
         UpdateModel(requestedKingdom, request);

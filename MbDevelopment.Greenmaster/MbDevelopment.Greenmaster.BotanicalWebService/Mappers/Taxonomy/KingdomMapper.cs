@@ -4,13 +4,20 @@ using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 
-public class KingdomMapper(IHashids hashids) : IMapper<TaxonKingdom, KingdomDto>
+public class KingdomMapper : IMapper<TaxonKingdom, KingdomDto>
 {
+    private readonly IHashids _hashids;
+
+    public KingdomMapper(IHashids hashids)
+    {
+        _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
+    }
+
     public KingdomDto? ToDto(TaxonKingdom model)
     {
         return new KingdomDto
         {
-            Id = hashids.Encode(model.Id),
+            Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description
         };
@@ -20,7 +27,7 @@ public class KingdomMapper(IHashids hashids) : IMapper<TaxonKingdom, KingdomDto>
     {
         return new TaxonKingdom
         {
-            Id = hashids.DecodeSingle(kingdomDto.Id),
+            Id = _hashids.DecodeSingle(kingdomDto.Id),
             LatinName = kingdomDto.Name,
             Description = kingdomDto.Description
         };

@@ -15,6 +15,6 @@ public class TaxonClade : ITaxonGroup
     public ITaxonGroup Ancestor { get; set; }
     public string LatinName { get; set; }
     public string Description { get; set; }
-    
+    //Cladogram research
     public ICollection<ITaxonGroup> Descendants { get; set; } = new List<ITaxonGroup>(); // Collection navigation containing dependents
 }

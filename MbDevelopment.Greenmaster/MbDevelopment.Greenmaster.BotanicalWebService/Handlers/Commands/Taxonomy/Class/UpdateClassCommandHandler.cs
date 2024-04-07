@@ -26,13 +26,13 @@ public class UpdateClassCommandHandler : IRequestHandler<UpdateClassCommand, Cla
     
     public async Task<ClassDto> Handle(UpdateClassCommand request, CancellationToken cancellationToken)
     {
-        var decodedId = _hashids.DecodeSingle(request.Id);
-        var decodedKingdomId = _hashids.DecodeSingle(request.PhylumId);
+        var rawClassId = _hashids.DecodeSingle(request.Id);
+        var rawPhylumId = _hashids.DecodeSingle(request.PhylumId);
        
-        var requestedClass = await _classRepo.GetAsync(k => k.Id == decodedId, cancellationToken);
+        var requestedClass = await _classRepo.GetAsync(k => k.Id == rawClassId, cancellationToken);
         if (requestedClass == null) throw new ValidationException($"Class with id {request.Id} not found");
        
-        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == decodedKingdomId, cancellationToken);
+        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == rawPhylumId, cancellationToken);
         if (requestedPhylum == null) throw new ValidationException($"Phylum with id {request.PhylumId}");
        
         UpdateModel(requestedClass, request, requestedPhylum);

@@ -1,6 +1,9 @@
 using System.Reflection;
 using FluentValidation;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
+using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 using MbDevelopment.Greenmaster.BotanicalWebService.Validation;
+using MbDevelopment.Greenmaster.Contracts.Dtos;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess;
 using MbDevelopment.Greenmaster.DataAccess.Base;
@@ -28,6 +31,16 @@ public static class RegisterGreenmaster
         services.AddScoped<IRepository<TaxonKingdom>, BotanicalRepository<TaxonKingdom>>();
         services.AddScoped<IRepository<TaxonPhylum>, BotanicalRepository<TaxonPhylum>>();
         services.AddScoped<IRepository<TaxonClass>, BotanicalRepository<TaxonClass>>();
+        services.AddScoped<IRepository<TaxonOrder>, BotanicalRepository<TaxonOrder>>();
+        return services;
+    }
+
+    public static IServiceCollection AddMappers(this IServiceCollection services)
+    {
+        services.AddScoped<IMapper<TaxonKingdom, KingdomDto>, KingdomMapper>();
+        services.AddScoped<IMapper<TaxonPhylum, PhylumDto>, PhylumMapper>();
+        services.AddScoped<IMapper<TaxonClass, ClassDto>, ClassMapper>();
+        services.AddScoped<IMapper<TaxonOrder, OrderDto>, OrderMapper>();
         return services;
     }
 }

@@ -5,8 +5,16 @@ namespace MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Class;
 
 public class UpdateClassCommand : IRequest<ClassDto>
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string PhylumId { get; set; }
+    public string Id { get; }
+    public string Name { get; }
+    public string Description { get; }
+    public string PhylumId { get; }
+
+    public UpdateClassCommand(string id, string name, string description, string phylumId)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        PhylumId = phylumId;
+    }
 }

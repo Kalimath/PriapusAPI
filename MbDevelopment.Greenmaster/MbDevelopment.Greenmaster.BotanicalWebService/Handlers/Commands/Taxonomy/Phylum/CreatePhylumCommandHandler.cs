@@ -26,8 +26,8 @@ public class CreatePhylumCommandHandler : IRequestHandler<CreatePhylumCommand, P
     
     public async Task<PhylumDto> Handle(CreatePhylumCommand request, CancellationToken cancellationToken)
     {
-        var decodedKingdomId = _hashids.DecodeSingle(request.KingdomId);
-        var kingdom = await _kingdomRepo.GetAsync(x => x.Id == decodedKingdomId, cancellationToken);
+        var rawKingdomId = _hashids.DecodeSingle(request.KingdomId);
+        var kingdom = await _kingdomRepo.GetAsync(x => x.Id == rawKingdomId, cancellationToken);
         if (kingdom == null) throw new ValidationException("Kingdom not found");
         var phylum = new TaxonPhylum
         {

@@ -23,9 +23,9 @@ public class DeleteClassCommandHandler : IRequestHandler<DeleteClassCommand, Cla
 
     public async Task<ClassDto> Handle(DeleteClassCommand request, CancellationToken cancellationToken)
     {
-        var decodedId = _hashids.DecodeSingle(request.Id);
-        var requestedClass = await _classRepo.GetAsync(phylum => phylum.Id == decodedId, cancellationToken);
-        if (requestedClass == null) throw new KeyNotFoundException($"Class with id: {decodedId} not found");
+        var rawId = _hashids.DecodeSingle(request.Id);
+        var requestedClass = await _classRepo.GetAsync(phylum => phylum.Id == rawId, cancellationToken);
+        if (requestedClass == null) throw new KeyNotFoundException($"Class with id: {rawId} not found");
         
         _classRepo.Delete(requestedClass);
         await _classRepo.SaveChangesAsync(cancellationToken);

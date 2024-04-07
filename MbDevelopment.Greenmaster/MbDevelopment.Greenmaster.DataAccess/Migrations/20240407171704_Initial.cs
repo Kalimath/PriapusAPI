@@ -1,6 +1,6 @@
-﻿#nullable disable
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-using Microsoft.EntityFrameworkCore.Migrations;
+#nullable disable
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
@@ -32,10 +32,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TaxonKingdomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    KingdomId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KingdomId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,9 +53,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PhylumId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhylumId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,9 +74,9 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClassId = table.Column<int>(type: "int", nullable: false),
                     LatinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,8 +160,40 @@ namespace MbDevelopment.Greenmaster.DataAccess.Migrations
                 {
                     { 1, "The kingdom of animals.", "Animalia" },
                     { 2, "The kingdom of plants.", "Plantae" },
-                    { 3, "The kingdom of fungi.", "Fungi" },
-                    { 4, "The kingdom of protista.", "Protista" }
+                    { 3, "The kingdom of fungi.", "Fungi" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Taxonomy.Phyla",
+                columns: new[] { "Id", "Description", "KingdomId", "LatinName" },
+                values: new object[,]
+                {
+                    { 1, "Ginkgo-like plant", 2, "Ginkgophyta" },
+                    { 2, "Conifers", 2, "Pinophyta" },
+                    { 3, "Flowering plants, angiosperms", 2, "Magnoliophyta" },
+                    { 4, "Clubmosses, spikemosses", 2, "Lycopodiophyta" },
+                    { 5, "Animals with exoskeleton", 1, "Arthropods" },
+                    { 6, " Deuterostomic animals", 1, "Chordata" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Taxonomy.Classes",
+                columns: new[] { "Id", "Description", "LatinName", "PhylumId" },
+                values: new object[,]
+                {
+                    { 1, "characterized by the presence of milk-producing mammary glands for feeding their young, a neocortex region of the brain, fur or hair, and three middle ear bones", "mammalia", 5 },
+                    { 2, "group of tetrapods with an ectothermic ('cold-blooded') metabolism and amniotic development", "Reptilia", 5 },
+                    { 3, "Flowering plants, angiosperms", "Ginkgoopsida", 1 },
+                    { 4, "Lily flowering plants", "Liliopsida", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Taxonomy.Orders",
+                columns: new[] { "Id", "ClassId", "Description", "LatinName" },
+                values: new object[,]
+                {
+                    { 1, 4, "Herbs with watery, milky and acrid sap", "Aranae" },
+                    { 2, 3, "containing only one extant species: Ginkgo biloba, the ginkgo tree", "Ginkgoales" }
                 });
 
             migrationBuilder.CreateIndex(

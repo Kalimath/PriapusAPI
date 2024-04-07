@@ -10,7 +10,7 @@ public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
 
     public PhylumMapper(IHashids hashids)
     {
-        _hashids = hashids;
+        _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
     }
 
     public PhylumDto? ToDto(TaxonPhylum model)
@@ -37,12 +37,9 @@ public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
 
     private KingdomDto MapParentTaxon(TaxonPhylum model)
     {
-        return new KingdomDto
+        return new KingdomDto()
         {
-            Id = _hashids.Encode(model.Id),
-            Name = model.LatinName,
-            Description = model.Description
-            
+            Id = _hashids.Encode(model.KingdomId)
         };
     }
 }

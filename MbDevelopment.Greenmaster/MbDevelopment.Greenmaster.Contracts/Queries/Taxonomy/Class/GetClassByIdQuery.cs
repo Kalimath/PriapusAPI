@@ -3,7 +3,12 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Class;
 
-public class GetClassByIdQuery(string id) : IRequest<ClassDto>
+public class GetClassByIdQuery : IRequest<ClassDto>
 {
-    public string Id { get; set; } = id;
+    public string Id { get; }
+    
+    public GetClassByIdQuery(string id)
+    {
+        Id = id;
+    }
 }
