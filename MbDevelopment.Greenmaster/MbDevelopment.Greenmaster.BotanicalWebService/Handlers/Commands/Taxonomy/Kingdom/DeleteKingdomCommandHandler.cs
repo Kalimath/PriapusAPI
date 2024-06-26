@@ -12,13 +12,13 @@ public class DeleteKingdomCommandHandler : IRequestHandler<DeleteKingdomCommand,
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
-    private readonly KingdomMapper _mapper;
+    private readonly KingdomTaxonDtoMapper _taxonDtoMapper;
 
     public DeleteKingdomCommandHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new KingdomTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
     
     public async Task<KingdomDto> Handle(DeleteKingdomCommand request, CancellationToken cancellationToken)
@@ -29,6 +29,6 @@ public class DeleteKingdomCommandHandler : IRequestHandler<DeleteKingdomCommand,
         
         _repository.Delete(kingdom);
         await _repository.SaveChangesAsync(cancellationToken);
-        return _mapper.ToDto(kingdom)!;
+        return _taxonDtoMapper.ToDto(kingdom)!;
     }
 }

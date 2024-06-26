@@ -4,11 +4,11 @@ using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 
-public class OrderMapper : IMapper<TaxonOrder, OrderDto>
+public class OrderTaxonDtoMapper : ITaxonDtoMapper<TaxonOrder, OrderDto>
 {
     private readonly IHashids _hashids;
 
-    public OrderMapper(IHashids hashids)
+    public OrderTaxonDtoMapper(IHashids hashids)
     {
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
     }

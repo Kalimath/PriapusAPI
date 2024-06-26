@@ -32,15 +32,19 @@ public static class RegisterGreenmaster
         services.AddScoped<IRepository<TaxonPhylum>, BotanicalRepository<TaxonPhylum>>();
         services.AddScoped<IRepository<TaxonClass>, BotanicalRepository<TaxonClass>>();
         services.AddScoped<IRepository<TaxonOrder>, BotanicalRepository<TaxonOrder>>();
+        services.AddScoped<IRepository<TaxonFamily>, BotanicalRepository<TaxonFamily>>();
+        services.AddScoped<IRepository<TaxonGenus>, BotanicalRepository<TaxonGenus>>();
         return services;
     }
 
     public static IServiceCollection AddMappers(this IServiceCollection services)
     {
-        services.AddScoped<IMapper<TaxonKingdom, KingdomDto>, KingdomMapper>();
-        services.AddScoped<IMapper<TaxonPhylum, PhylumDto>, PhylumMapper>();
-        services.AddScoped<IMapper<TaxonClass, ClassDto>, ClassMapper>();
-        services.AddScoped<IMapper<TaxonOrder, OrderDto>, OrderMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonKingdom, KingdomDto>, KingdomTaxonDtoMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonPhylum, PhylumDto>, PhylumTaxonDtoMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonClass, ClassDto>, ClassTaxonDtoMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonOrder, OrderDto>, OrderTaxonDtoMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonFamily, FamilyDto>, FamilyTaxonDtoMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonGenus, GenusDto>, GenusTaxonDtoMapper>();
         return services;
     }
 }

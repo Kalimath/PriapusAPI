@@ -14,14 +14,14 @@ public class CreatePhylumCommandHandler : IRequestHandler<CreatePhylumCommand, P
     private readonly IRepository<TaxonPhylum> _phylumRepo;
     private readonly IRepository<TaxonKingdom> _kingdomRepo;
     private readonly IHashids _hashids;
-    private readonly PhylumMapper _mapper;
+    private readonly PhylumTaxonDtoMapper _taxonDtoMapper;
 
     public CreatePhylumCommandHandler(IRepository<TaxonPhylum> phylumRepo, IRepository<TaxonKingdom> kingdomRepo, IHashids hashids)
     {
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _kingdomRepo = kingdomRepo ?? throw new ArgumentNullException(nameof(kingdomRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = new PhylumMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new PhylumTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
     
     public async Task<PhylumDto> Handle(CreatePhylumCommand request, CancellationToken cancellationToken)
@@ -39,6 +39,6 @@ public class CreatePhylumCommandHandler : IRequestHandler<CreatePhylumCommand, P
         await _phylumRepo.SaveChangesAsync(cancellationToken);
         var createdItem = _phylumRepo.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();
         if (createdItem == null) throw new Exception("Failed to get created phylum");
-        return _mapper.ToDto(createdItem)!;
+        return _taxonDtoMapper.ToDto(createdItem)!;
     }
 }

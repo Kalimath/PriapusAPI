@@ -12,16 +12,16 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonom
 public class GetAllKingdomsQueryHandler : IRequestHandler<GetAllKingdomsQuery, IEnumerable<KingdomDto>>
 {
     private readonly IRepository<TaxonKingdom> _repository;
-    private readonly KingdomMapper _mapper;
+    private readonly KingdomTaxonDtoMapper _taxonDtoMapper;
     
     public GetAllKingdomsQueryHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids)); 
+        _taxonDtoMapper = new KingdomTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids)); 
     }
     
     public async Task<IEnumerable<KingdomDto>> Handle(GetAllKingdomsQuery request, CancellationToken cancellationToken)
     {
-        return (await _repository.All().Select(x => _mapper.ToDto(x)).ToListAsync(cancellationToken))!;
+        return (await _repository.All().Select(x => _taxonDtoMapper.ToDto(x)).ToListAsync(cancellationToken))!;
     }
 }

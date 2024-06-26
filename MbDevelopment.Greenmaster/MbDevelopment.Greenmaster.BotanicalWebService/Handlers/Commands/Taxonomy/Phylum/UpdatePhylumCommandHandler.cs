@@ -14,14 +14,14 @@ public class UpdatePhylumCommandHandler : IRequestHandler<UpdatePhylumCommand, P
     private readonly IRepository<TaxonPhylum> _phylumRepo;
     private readonly IRepository<TaxonKingdom> _kingdomRepo;
     private readonly IHashids _hashids;
-    private readonly PhylumMapper _mapper;
+    private readonly PhylumTaxonDtoMapper _taxonDtoMapper;
     
     public UpdatePhylumCommandHandler(IRepository<TaxonPhylum> phylumRepo, IRepository<TaxonKingdom> kingdomRepo, IHashids hashids)
     {
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _kingdomRepo = kingdomRepo ?? throw new ArgumentNullException(nameof(kingdomRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = new PhylumMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new PhylumTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
     
     public async Task<PhylumDto> Handle(UpdatePhylumCommand request, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public class UpdatePhylumCommandHandler : IRequestHandler<UpdatePhylumCommand, P
         _phylumRepo.Update(requestedPhylum);
         await _phylumRepo.SaveChangesAsync(cancellationToken);
        
-        return _mapper.ToDto(requestedPhylum)!;
+        return _taxonDtoMapper.ToDto(requestedPhylum)!;
     }
 
     private static void UpdateModel(TaxonPhylum phylum, UpdatePhylumCommand request, TaxonKingdom kingdom)

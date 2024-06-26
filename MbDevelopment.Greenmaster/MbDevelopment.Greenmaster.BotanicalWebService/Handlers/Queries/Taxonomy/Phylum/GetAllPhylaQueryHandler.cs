@@ -12,16 +12,16 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonom
 public class GetAllPhylaQueryHandler : IRequestHandler<GetAllPhylaQuery, IEnumerable<PhylumDto>>
 {
     private readonly IRepository<TaxonPhylum> _repository;
-    private readonly PhylumMapper _phylumMapper;
+    private readonly PhylumTaxonDtoMapper _phylumTaxonDtoMapper;
 
     public GetAllPhylaQueryHandler(IRepository<TaxonPhylum> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _phylumMapper = new PhylumMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _phylumTaxonDtoMapper = new PhylumTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
 
     public async Task<IEnumerable<PhylumDto>> Handle(GetAllPhylaQuery request, CancellationToken cancellationToken)
     {
-        return (await _repository.All().Include(phylum => phylum.Kingdom).Select(phylum => _phylumMapper.ToDto(phylum)).ToListAsync(cancellationToken))!;
+        return (await _repository.All().Include(phylum => phylum.Kingdom).Select(phylum => _phylumTaxonDtoMapper.ToDto(phylum)).ToListAsync(cancellationToken))!;
     }
 }

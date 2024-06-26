@@ -12,13 +12,13 @@ public class UpdateKingdomCommandHandler : IRequestHandler<UpdateKingdomCommand,
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
-    private readonly KingdomMapper _mapper;
+    private readonly KingdomTaxonDtoMapper _taxonDtoMapper;
 
     public UpdateKingdomCommandHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new KingdomTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
 
     public async Task<KingdomDto> Handle(UpdateKingdomCommand request, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ public class UpdateKingdomCommandHandler : IRequestHandler<UpdateKingdomCommand,
         _repository.Update(requestedKingdom);
         await _repository.SaveChangesAsync(cancellationToken);
         
-        return _mapper.ToDto(requestedKingdom)!;
+        return _taxonDtoMapper.ToDto(requestedKingdom)!;
     }
 
     private static void UpdateModel(TaxonKingdom kingdom, UpdateKingdomCommand request)

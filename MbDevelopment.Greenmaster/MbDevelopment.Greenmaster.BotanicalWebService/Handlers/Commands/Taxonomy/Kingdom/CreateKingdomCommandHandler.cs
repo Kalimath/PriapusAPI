@@ -11,12 +11,12 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Commands.Taxono
 public class CreateKingdomCommandHandler : IRequestHandler<CreateKingdomCommand, KingdomDto>
 {
     private readonly IRepository<TaxonKingdom> _repository;
-    private readonly KingdomMapper _mapper;
+    private readonly KingdomTaxonDtoMapper _taxonDtoMapper;
     
     public CreateKingdomCommandHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _mapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new KingdomTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
     public async Task<KingdomDto> Handle(CreateKingdomCommand request, CancellationToken cancellationToken)
     {
@@ -25,6 +25,6 @@ public class CreateKingdomCommandHandler : IRequestHandler<CreateKingdomCommand,
         
         var createdItem = _repository.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();
         if (createdItem == null) throw new Exception("Failed to get created kingdom");
-        return _mapper.ToDto(createdItem)!;
+        return _taxonDtoMapper.ToDto(createdItem)!;
     }
 }

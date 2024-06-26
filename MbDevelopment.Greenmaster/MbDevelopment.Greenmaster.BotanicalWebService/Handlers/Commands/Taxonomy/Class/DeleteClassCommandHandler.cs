@@ -12,34 +12,23 @@ public class DeleteClassCommandHandler : IRequestHandler<DeleteClassCommand, Cla
 {
     private readonly IRepository<TaxonClass> _classRepo;
     private readonly IHashids _hashids;
-    private readonly ClassMapper _mapper;
+    private readonly ClassTaxonDtoMapper _taxonDtoMapper;
 
     public DeleteClassCommandHandler(IRepository<TaxonClass> phylumRepo, IHashids hashids)
     {
         _classRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = new ClassMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new ClassTaxonDtoMapper(hashids);
     }
 
     public async Task<ClassDto> Handle(DeleteClassCommand request, CancellationToken cancellationToken)
     {
-        var rawId = _hashids.DecodeSingle(request.Id);
-        var requestedClass = await _classRepo.GetAsync(phylum => phylum.Id == rawId, cancellationToken);
-        if (requestedClass == null) throw new KeyNotFoundException($"Class with id: {rawId} not found");
+        var decodedId = _hashids.DecodeSingle(request.Id);
+        var requested = await _classRepo.GetAsync(taxonClass => taxonClass.Id == decodedId, cancellationToken);
+        if (requested == null) throw new KeyNotFoundException($"Class with id: {decodedId} not found");
         
-        _classRepo.Delete(requestedClass);
+        _classRepo.Delete(requested);
         await _classRepo.SaveChangesAsync(cancellationToken);
-        return new ClassDto()
-        {
-            Id = request.Id,
-            Name = requestedClass.LatinName,
-            Description = requestedClass.Description,
-            Phylum = new PhylumDto()
-            {
-                Id = _hashids.Encode(requestedClass.PhylumId),
-                Name = null!,
-                Description = null!
-            }
-        };
+        return _taxonDtoMapper.ToDto(requested)!;
     }
 }

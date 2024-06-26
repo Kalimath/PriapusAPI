@@ -12,16 +12,16 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonom
 public class GetAllClassesQueryHandler : IRequestHandler<GetAllClassesQuery, IEnumerable<BasicTaxonDto>>
 {
     private readonly IRepository<TaxonClass> _repository;
-    private readonly ClassMapper _classMapper;
+    private readonly ClassTaxonDtoMapper _classTaxonDtoMapper;
 
     public GetAllClassesQueryHandler(IRepository<TaxonClass> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _classMapper = new ClassMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _classTaxonDtoMapper = new ClassTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
 
     public async Task<IEnumerable<BasicTaxonDto>> Handle(GetAllClassesQuery request, CancellationToken cancellationToken)
     {
-        return (await _repository.All().Select(c => _classMapper.ToBasicDto(c)).ToListAsync(cancellationToken))!;
+        return (await _repository.All().Select(c => _classTaxonDtoMapper.ToBasicDto(c)).ToListAsync(cancellationToken))!;
     }
 }

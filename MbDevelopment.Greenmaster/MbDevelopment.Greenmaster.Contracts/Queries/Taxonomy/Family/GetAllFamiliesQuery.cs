@@ -3,9 +3,7 @@ using MediatR;
 
 namespace MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Family;
 
-public class GetFamilyByIdQuery : IRequest<FamilyDto>
+public class GetAllFamiliesQuery : IRequest<IEnumerable<BasicTaxonDto>>
 {
-    public string Id { get; set; }
     
-    public GetFamilyByIdQuery(string id) => Id = id;
 }

@@ -13,14 +13,14 @@ public class GetClassByIdQueryHandler : IRequestHandler<GetClassByIdQuery, Class
     private readonly IRepository<TaxonClass> _classRepo;
     private readonly IRepository<TaxonPhylum> _phylumRepo;
     private readonly IHashids _hashids;
-    private readonly ClassMapper _classMapper;
+    private readonly ClassTaxonDtoMapper _classTaxonDtoMapper;
     
     public GetClassByIdQueryHandler(IRepository<TaxonClass> classRepo, IRepository<TaxonPhylum> phylumRepo, IHashids hashids)
     {
         _classRepo = classRepo ?? throw new ArgumentNullException(nameof(classRepo));
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _classMapper = new ClassMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _classTaxonDtoMapper = new ClassTaxonDtoMapper(hashids);
     }
     
     public async Task<ClassDto> Handle(GetClassByIdQuery request, CancellationToken cancellationToken)
@@ -32,6 +32,6 @@ public class GetClassByIdQueryHandler : IRequestHandler<GetClassByIdQuery, Class
         
         requestedClass.Phylum = (await _phylumRepo.GetAsync(x => x.Id == requestedClass.PhylumId, cancellationToken))!;
         
-        return _classMapper.ToDto(requestedClass)!;
+        return _classTaxonDtoMapper.ToDto(requestedClass)!;
     }
 }

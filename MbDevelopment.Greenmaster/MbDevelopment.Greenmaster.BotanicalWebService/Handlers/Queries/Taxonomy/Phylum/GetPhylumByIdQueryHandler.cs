@@ -13,14 +13,14 @@ public class GetPhylumByIdQueryHandler : IRequestHandler<GetPhylumByIdQuery, Phy
     private readonly IRepository<TaxonPhylum> _phylumRepo;
     private readonly IRepository<TaxonKingdom> _kingdomRepo;
     private readonly IHashids _hashids;
-    private readonly PhylumMapper _phylumMapper;
+    private readonly PhylumTaxonDtoMapper _phylumTaxonDtoMapper;
     
     public GetPhylumByIdQueryHandler(IRepository<TaxonPhylum> phylumRepo, IRepository<TaxonKingdom> kingdomRepo, IHashids hashids)
     {
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _kingdomRepo = kingdomRepo ?? throw new ArgumentNullException(nameof(kingdomRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _phylumMapper = new PhylumMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _phylumTaxonDtoMapper = new PhylumTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
     
     public async Task<PhylumDto> Handle(GetPhylumByIdQuery request, CancellationToken cancellationToken)
@@ -32,6 +32,6 @@ public class GetPhylumByIdQueryHandler : IRequestHandler<GetPhylumByIdQuery, Phy
         
         phylum.Kingdom = (await _kingdomRepo.GetAsync(x => x.Id == phylum.KingdomId, cancellationToken))!;
         
-        return _phylumMapper.ToDto(phylum)!;
+        return _phylumTaxonDtoMapper.ToDto(phylum)!;
     }
 }

@@ -13,14 +13,14 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Ord
     private readonly IRepository<TaxonOrder> _repository;
     private readonly IRepository<TaxonClass> _classRepo;
     private readonly IHashids _hashids;
-    private readonly IMapper<TaxonOrder, OrderDto> _mapper;
+    private readonly ITaxonDtoMapper<TaxonOrder, OrderDto> _taxonDtoMapper;
 
-    public UpdateOrderCommandHandler(IRepository<TaxonOrder> repository,IRepository<TaxonClass> classRepo, IMapper<TaxonOrder, OrderDto> mapper, IHashids hashids)
+    public UpdateOrderCommandHandler(IRepository<TaxonOrder> repository,IRepository<TaxonClass> classRepo, ITaxonDtoMapper<TaxonOrder, OrderDto> taxonDtoMapper, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _classRepo = classRepo ?? throw new ArgumentNullException(nameof(classRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _taxonDtoMapper = taxonDtoMapper ?? throw new ArgumentNullException(nameof(taxonDtoMapper));
     }
 
     public async Task<OrderDto> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Ord
         _repository.Update(requestedOrder);
         await _repository.SaveChangesAsync(cancellationToken);
         
-        return _mapper.ToDto(requestedOrder)!;
+        return _taxonDtoMapper.ToDto(requestedOrder)!;
     }
 
     private static void UpdateModel(TaxonOrder initialOrder, TaxonClass updatedClass, UpdateOrderCommand updatedValues)

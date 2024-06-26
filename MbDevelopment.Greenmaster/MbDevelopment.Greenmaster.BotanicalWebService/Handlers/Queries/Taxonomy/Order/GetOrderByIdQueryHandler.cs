@@ -13,13 +13,13 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
 {
     private readonly IRepository<TaxonOrder> _repository;
     private readonly IHashids _hashids;
-    private readonly IMapper<TaxonOrder, OrderDto> _mapper;
+    private readonly ITaxonDtoMapper<TaxonOrder, OrderDto> _taxonDtoMapper;
 
-    public GetOrderByIdQueryHandler(IRepository<TaxonOrder> repository, IMapper<TaxonOrder, OrderDto> mapper, IHashids hashids)
+    public GetOrderByIdQueryHandler(IRepository<TaxonOrder> repository, ITaxonDtoMapper<TaxonOrder, OrderDto> taxonDtoMapper, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _taxonDtoMapper = taxonDtoMapper ?? throw new ArgumentNullException(nameof(taxonDtoMapper));
         
     }
 
@@ -29,6 +29,6 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
         
         var order = await _repository.GetAsync(x => x.Id == rawId, cancellationToken);
         
-        return (order == null ? throw new ValidationException("Order not found") : _mapper.ToDto(order))!;
+        return (order == null ? throw new ValidationException("Order not found") : _taxonDtoMapper.ToDto(order))!;
     }
 }

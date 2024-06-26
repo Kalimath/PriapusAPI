@@ -12,13 +12,13 @@ public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand, Ord
 {
     private readonly IRepository<TaxonOrder> _repository;
     private readonly IHashids _hashids;
-    private readonly IMapper<TaxonOrder, OrderDto> _mapper;
+    private readonly ITaxonDtoMapper<TaxonOrder, OrderDto> _taxonDtoMapper;
 
-    public DeleteOrderCommandHandler(IRepository<TaxonOrder> repository, IMapper<TaxonOrder, OrderDto> mapper, IHashids hashids)
+    public DeleteOrderCommandHandler(IRepository<TaxonOrder> repository, ITaxonDtoMapper<TaxonOrder, OrderDto> taxonDtoMapper, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _taxonDtoMapper = taxonDtoMapper ?? throw new ArgumentNullException(nameof(taxonDtoMapper));
     }
     
     public async Task<OrderDto> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
@@ -29,6 +29,6 @@ public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand, Ord
         
         _repository.Delete(order);
         await _repository.SaveChangesAsync(cancellationToken);
-        return _mapper.ToDto(order)!;
+        return _taxonDtoMapper.ToDto(order)!;
     }
 }

@@ -13,13 +13,13 @@ public class GetKingdomByIdQueryHandler : IRequestHandler<GetKingdomByIdQuery, K
 {
     private readonly IRepository<TaxonKingdom> _repository;
     private readonly IHashids _hashids;
-    private readonly KingdomMapper _kingdomMapper;
+    private readonly KingdomTaxonDtoMapper _kingdomTaxonDtoMapper;
 
     public GetKingdomByIdQueryHandler(IRepository<TaxonKingdom> repository, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _kingdomMapper = new KingdomMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _kingdomTaxonDtoMapper = new KingdomTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
         
     }
 
@@ -30,6 +30,6 @@ public class GetKingdomByIdQueryHandler : IRequestHandler<GetKingdomByIdQuery, K
         
         var kingdom = await _repository.GetAsync(x => x.Id == rawId, cancellationToken);
         
-        return (kingdom == null ? throw new ValidationException("Kingdom not found") : _kingdomMapper.ToDto(kingdom))!;
+        return (kingdom == null ? throw new ValidationException("Kingdom not found") : _kingdomTaxonDtoMapper.ToDto(kingdom))!;
     }
 }

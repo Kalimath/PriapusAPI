@@ -4,54 +4,49 @@ using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 
-public class PhylumMapper : IMapper<TaxonPhylum, PhylumDto>
+public class FamilyTaxonDtoMapper : ITaxonDtoMapper<TaxonFamily, FamilyDto>
 {
     private readonly IHashids _hashids;
-
-    public PhylumMapper(IHashids hashids)
+    
+    public FamilyTaxonDtoMapper(IHashids hashids)
     {
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
     }
 
-    public PhylumDto? ToDto(TaxonPhylum model)
+    public FamilyDto? ToDto(TaxonFamily model)
     {
-        return new PhylumDto
+        return new FamilyDto()
         {
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description,
-            Kingdom = MapParentTaxon(model)!
+            Order = new BasicTaxonDto()
+            {
+                Id = _hashids.Encode(model.OrderId)
+            }
         };
     }
 
-    public BasicTaxonDto? ToBasicDto(TaxonPhylum model)
+    public BasicTaxonDto ToBasicDto(TaxonFamily model)
     {
         return new BasicTaxonDto()
         {
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description,
-            ParentTaxonId = _hashids.Encode(model.KingdomId),
-            ParentTaxonType = nameof(model.Kingdom)
+            ParentTaxonId = _hashids.Encode(model.OrderId),
+            ParentTaxonType = nameof(model.Order)
         };
     }
 
-    public TaxonPhylum FromDto(PhylumDto dto)
+    public TaxonFamily FromDto(FamilyDto dto)
     {
-        return new TaxonPhylum
+        return new TaxonFamily()
         {
             Id = _hashids.DecodeSingle(dto.Id),
             LatinName = dto.Name,
             Description = dto.Description
-            //Kingdom not mapped
-        };
-    }
-
-    private KingdomDto MapParentTaxon(TaxonPhylum model)
-    {
-        return new KingdomDto()
-        {
-            Id = _hashids.Encode(model.KingdomId)
+            //Order not mapped
         };
     }
 }

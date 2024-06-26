@@ -14,25 +14,25 @@ public class UpdateClassCommandHandler : IRequestHandler<UpdateClassCommand, Cla
     private readonly IRepository<TaxonClass> _classRepo;
     private readonly IRepository<TaxonPhylum> _phylumRepo;
     private readonly IHashids _hashids;
-    private readonly ClassMapper _mapper;
+    private readonly ClassTaxonDtoMapper _taxonDtoMapper;
     
     public UpdateClassCommandHandler(IRepository<TaxonClass> classRepo, IRepository<TaxonPhylum> phylumRepo, IHashids hashids)
     {
         _classRepo = classRepo ?? throw new ArgumentNullException(nameof(classRepo));
         _phylumRepo = phylumRepo ?? throw new ArgumentNullException(nameof(phylumRepo));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _mapper = new ClassMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _taxonDtoMapper = new ClassTaxonDtoMapper(hashids);
     }
     
     public async Task<ClassDto> Handle(UpdateClassCommand request, CancellationToken cancellationToken)
     {
-        var rawClassId = _hashids.DecodeSingle(request.Id);
-        var rawPhylumId = _hashids.DecodeSingle(request.PhylumId);
+        var decodedClassId = _hashids.DecodeSingle(request.Id);
+        var decodedPhylumId = _hashids.DecodeSingle(request.PhylumId);
        
-        var requestedClass = await _classRepo.GetAsync(k => k.Id == rawClassId, cancellationToken);
+        var requestedClass = await _classRepo.GetAsync(k => k.Id == decodedClassId, cancellationToken);
         if (requestedClass == null) throw new ValidationException($"Class with id {request.Id} not found");
        
-        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == rawPhylumId, cancellationToken);
+        var requestedPhylum = await _phylumRepo.GetAsync(k => k.Id == decodedPhylumId, cancellationToken);
         if (requestedPhylum == null) throw new ValidationException($"Phylum with id {request.PhylumId}");
        
         UpdateModel(requestedClass, request, requestedPhylum);
@@ -40,7 +40,7 @@ public class UpdateClassCommandHandler : IRequestHandler<UpdateClassCommand, Cla
         _classRepo.Update(requestedClass);
         await _classRepo.SaveChangesAsync(cancellationToken);
        
-        return _mapper.ToDto(requestedClass)!;
+        return _taxonDtoMapper.ToDto(requestedClass)!;
     }
 
     private static void UpdateModel(TaxonClass original, UpdateClassCommand request, TaxonPhylum phylum)

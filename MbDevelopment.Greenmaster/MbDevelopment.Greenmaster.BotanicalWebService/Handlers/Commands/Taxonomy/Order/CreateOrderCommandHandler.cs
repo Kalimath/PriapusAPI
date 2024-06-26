@@ -12,14 +12,14 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Ord
 {
     private readonly IRepository<TaxonOrder> _repository;
     private readonly IRepository<TaxonClass> _classRepo;
-    private readonly IMapper<TaxonOrder, OrderDto> _mapper;
+    private readonly ITaxonDtoMapper<TaxonOrder, OrderDto> _taxonDtoMapper;
     private readonly IHashids _hashids;
     
-    public CreateOrderCommandHandler(IRepository<TaxonOrder> repository, IRepository<TaxonClass> classRepo, IMapper<TaxonOrder, OrderDto> mapper, IHashids hashids)
+    public CreateOrderCommandHandler(IRepository<TaxonOrder> repository, IRepository<TaxonClass> classRepo, ITaxonDtoMapper<TaxonOrder, OrderDto> taxonDtoMapper, IHashids hashids)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _classRepo = classRepo ?? throw new ArgumentNullException(nameof(classRepo));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _taxonDtoMapper = taxonDtoMapper ?? throw new ArgumentNullException(nameof(taxonDtoMapper));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
     }
     public async Task<OrderDto> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -32,6 +32,6 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Ord
         
         var createdItem = _repository.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();
         if (createdItem == null) throw new Exception("Failed to get created order");
-        return _mapper.ToDto(createdItem)!;
+        return _taxonDtoMapper.ToDto(createdItem)!;
     }
 }

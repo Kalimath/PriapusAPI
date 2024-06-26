@@ -4,54 +4,54 @@ using MbDevelopment.Greenmaster.Core.Taxonomy;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 
-public class ClassMapper : IMapper<TaxonClass, ClassDto>
+public class PhylumTaxonDtoMapper : ITaxonDtoMapper<TaxonPhylum, PhylumDto>
 {
     private readonly IHashids _hashids;
 
-    public ClassMapper(IHashids hashids)
+    public PhylumTaxonDtoMapper(IHashids hashids)
     {
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
     }
 
-    public ClassDto? ToDto(TaxonClass model)
+    public PhylumDto? ToDto(TaxonPhylum model)
     {
-        return new ClassDto()
+        return new PhylumDto
         {
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description,
-            Phylum = MapParentTaxon(model)!
+            Kingdom = MapParentTaxon(model)!
         };
     }
 
-    public BasicTaxonDto ToBasicDto(TaxonClass model)
+    public BasicTaxonDto? ToBasicDto(TaxonPhylum model)
     {
         return new BasicTaxonDto()
         {
             Id = _hashids.Encode(model.Id),
             Name = model.LatinName,
             Description = model.Description,
-            ParentTaxonId = _hashids.Encode(model.PhylumId),
-            ParentTaxonType = nameof(model.Phylum)
+            ParentTaxonId = _hashids.Encode(model.KingdomId),
+            ParentTaxonType = nameof(model.Kingdom)
         };
     }
 
-    public TaxonClass FromDto(ClassDto dto)
+    public TaxonPhylum FromDto(PhylumDto dto)
     {
-        return new TaxonClass()
+        return new TaxonPhylum
         {
             Id = _hashids.DecodeSingle(dto.Id),
             LatinName = dto.Name,
             Description = dto.Description
-            //Phylum not mapped
+            //Kingdom not mapped
         };
     }
 
-    private PhylumDto MapParentTaxon(TaxonClass model)
+    private KingdomDto MapParentTaxon(TaxonPhylum model)
     {
-        return new PhylumDto
+        return new KingdomDto()
         {
-            Id = _hashids.Encode(model.PhylumId)
+            Id = _hashids.Encode(model.KingdomId)
         };
     }
 }
