@@ -1,6 +1,4 @@
-using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
-using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Family;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
@@ -12,16 +10,17 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Handlers.Queries.Taxonom
 
 public class GetAllFamiliesQueryHandler : IRequestHandler<GetAllFamiliesQuery, IEnumerable<BasicTaxonDto>>
 {
-    private readonly IRepository<TaxonFamily> _repository;
-    private readonly ITaxonDtoMapper<TaxonFamily, FamilyDto> _classTaxonDtoMapper;
+    private readonly IRepository<TaxonFamily> _familyRepo;
+    private readonly ITaxonDtoMapper<TaxonFamily, FamilyDto> _familyMapper;
 
-    public GetAllFamiliesQueryHandler(IRepository<TaxonFamily> repository, IHashids hashids)
+    public GetAllFamiliesQueryHandler(IRepository<TaxonFamily> repository, ITaxonDtoMapper<TaxonFamily, FamilyDto> familyMapper)
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _classTaxonDtoMapper = new FamilyTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
+        _familyRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+        _familyMapper = familyMapper ?? throw new ArgumentNullException(nameof(familyMapper));
     }
+    
     public async Task<IEnumerable<BasicTaxonDto>> Handle(GetAllFamiliesQuery request, CancellationToken cancellationToken)
     {
-        return (await _repository.All().Select(c => _classTaxonDtoMapper.ToBasicDto(c)).ToListAsync(cancellationToken))!;
+        return (await _familyRepo.All().Select(c => _familyMapper.ToBasicDto(c)).ToListAsync(cancellationToken))!;
     }
 }

@@ -16,7 +16,7 @@ public class ApiControllerBase : ControllerBase
     private readonly IMediator _mediator;
     public ApiControllerBase(IMediator mediator)
     {
-        _mediator = mediator ?? throw new ArgumentNullException();
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     #region Execute requests

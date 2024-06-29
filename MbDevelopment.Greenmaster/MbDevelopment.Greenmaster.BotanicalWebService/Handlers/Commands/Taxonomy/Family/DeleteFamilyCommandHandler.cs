@@ -1,6 +1,5 @@
 using HashidsNet;
 using MbDevelopment.Greenmaster.BotanicalWebService.Mappers;
-using MbDevelopment.Greenmaster.BotanicalWebService.Mappers.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Family;
 using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Core.Taxonomy;
@@ -13,13 +12,13 @@ public class DeleteFamilyCommandHandler : IRequestHandler<DeleteFamilyCommand, F
 {
     private readonly IRepository<TaxonFamily> _familyRepo;
     private readonly IHashids _hashids;
-    private readonly ITaxonDtoMapper<TaxonFamily, FamilyDto> _taxonDtoMapper;
+    private readonly ITaxonDtoMapper<TaxonFamily, FamilyDto> _familyMapper;
 
-    public DeleteFamilyCommandHandler(IRepository<TaxonFamily> familyRepo, IHashids hashids)
+    public DeleteFamilyCommandHandler(IRepository<TaxonFamily> familyRepo, ITaxonDtoMapper<TaxonFamily, FamilyDto> familyMapper, IHashids hashids)
     {
         _familyRepo = familyRepo ?? throw new ArgumentNullException(nameof(familyRepo));
+        _familyMapper = familyMapper ?? throw new ArgumentNullException(nameof(familyMapper));
         _hashids = hashids ?? throw new ArgumentNullException(nameof(hashids));
-        _taxonDtoMapper = new FamilyTaxonDtoMapper(hashids) ?? throw new ArgumentNullException(nameof(hashids));
     }
 
     public async Task<FamilyDto> Handle(DeleteFamilyCommand request, CancellationToken cancellationToken)
@@ -31,6 +30,6 @@ public class DeleteFamilyCommandHandler : IRequestHandler<DeleteFamilyCommand, F
         
         _familyRepo.Delete(requested);
         await _familyRepo.SaveChangesAsync(cancellationToken);
-        return _taxonDtoMapper.ToDto(requested)!;
+        return _familyMapper.ToDto(requested)!;
     }
 }
