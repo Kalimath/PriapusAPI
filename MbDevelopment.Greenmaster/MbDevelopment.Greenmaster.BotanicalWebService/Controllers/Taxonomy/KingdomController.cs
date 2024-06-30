@@ -1,6 +1,7 @@
 using System.Net;
 using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Base;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Kingdom;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Kingdom;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 using MediatR;
@@ -15,6 +16,7 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 public class KingdomController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(KingdomDto), 200)]
     public async Task<IActionResult> Get([FromRoute] string id)
     {
         if (string.IsNullOrWhiteSpace(id)) return BadRequest("id is required");
@@ -22,6 +24,7 @@ public class KingdomController(IMediator mediator) : ApiControllerBase(mediator)
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<BasicTaxonDto>), 200)]
     public async Task<IActionResult> GetAll()
     {
         return await ExecuteAsync(new GetAllKingdomsQuery());

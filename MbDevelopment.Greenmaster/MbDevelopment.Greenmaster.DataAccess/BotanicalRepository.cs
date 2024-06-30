@@ -1,10 +1,11 @@
 using System.Linq.Expressions;
+using MbDevelopment.Greenmaster.Core.Taxonomy;
 using MbDevelopment.Greenmaster.DataAccess.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace MbDevelopment.Greenmaster.DataAccess;
 
-public class BotanicalRepository<T> : IRepository<T> where T : class
+public class BotanicalRepository<T> : IRepository<T> where T : class, ITaxonomyItem
 {
     private readonly BotanicalContext _dbContext;
     private readonly DbSet<T> _modelDbSets;
@@ -67,5 +68,10 @@ public class BotanicalRepository<T> : IRepository<T> where T : class
     {
         _modelDbSets.Attach(entity);
         _dbContext.Entry(entity).State = EntityState.Modified;
+    }
+
+    public bool Exists(Expression<Func<T, bool>> predicate)
+    {
+        return _modelDbSets.Any(predicate);
     }
 }

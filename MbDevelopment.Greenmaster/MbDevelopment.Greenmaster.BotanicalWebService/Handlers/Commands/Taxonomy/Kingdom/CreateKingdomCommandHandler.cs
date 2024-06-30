@@ -20,11 +20,12 @@ public class CreateKingdomCommandHandler : IRequestHandler<CreateKingdomCommand,
     }
     public async Task<KingdomDto> Handle(CreateKingdomCommand request, CancellationToken cancellationToken)
     {
+        if(_repository.Exists(x => x.LatinName == request.Name)) throw new ArgumentException($"Kingdom with name: {request.Name} already exists");
         _repository.Add(new TaxonKingdom {LatinName = request.Name, Description = request.Description});
         await _repository.SaveChangesAsync(cancellationToken);
         
         var createdItem = _repository.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();
         if (createdItem == null) throw new Exception("Failed to get created kingdom");
-        return _taxonDtoMapper.ToDto(createdItem)!;
+        return _taxonDtoMapper.ToDto(createdItem);
     }
 }

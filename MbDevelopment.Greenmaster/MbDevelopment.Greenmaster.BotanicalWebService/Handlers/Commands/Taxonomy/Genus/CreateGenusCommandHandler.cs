@@ -26,19 +26,20 @@ public class CreateGenusCommandHandler : IRequestHandler<CreateGenusCommand, Gen
 
     public async Task<GenusDto> Handle(CreateGenusCommand request, CancellationToken cancellationToken)
     {
-        var decodedFamilyId = _hashids.DecodeSingle(request.FamilyId);
-        var requestedFamily = await _familyRepo.GetAsync(x => x.Id == decodedFamilyId, cancellationToken);
+        if(_genusRepo.Exists(x => x.LatinName == request.Name)) throw new ArgumentException($"Genus with name: {request.Name} already exists");
+        var decodedFamilyId = _hashids.DecodeSingle(request.FamilyId);var requestedFamily = await _familyRepo.GetAsync(x => x.Id == decodedFamilyId, cancellationToken);
         if (requestedFamily == null) throw new KeyNotFoundException($"Family with id: {request.FamilyId} not found");
         var genusExistsWithName = await _genusRepo.GetAsync(x => x.LatinName == request.Name, cancellationToken);
         if (genusExistsWithName is not null) return _genusMapper.ToDto(genusExistsWithName)!;
-        var newFamily = new TaxonFamily()
+        var newGenus = new TaxonGenus()
         {
             LatinName = request.Name,
             Description = request.Description,
-            OrderId = requestedFamily.Id
+            FamilyId = requestedFamily.Id,
+            Family = requestedFamily
         };
-        _familyRepo.Add(newFamily);
-        await _familyRepo.SaveChangesAsync(cancellationToken);
+        _genusRepo.Add(newGenus);
+        await _genusRepo.SaveChangesAsync(cancellationToken);
         var createdItem = _genusRepo.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();
         if (createdItem == null) throw new Exception("Failed to get created genus");
         return _genusMapper.ToDto(createdItem)!;

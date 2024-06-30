@@ -1,5 +1,6 @@
 using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Base;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Phylum;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Phylum;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 using MediatR;
@@ -11,12 +12,14 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 public class PhylumController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(PhylumDto), 200)]
     public async Task<IActionResult> Get([FromRoute] string id)
     {
         return await ExecuteAsync(new GetPhylumByIdQuery(id));
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<BasicTaxonDto>), 200)]
     public async Task<IActionResult> GetAll()
     {
         return await ExecuteAsync(new GetAllPhylaQuery());

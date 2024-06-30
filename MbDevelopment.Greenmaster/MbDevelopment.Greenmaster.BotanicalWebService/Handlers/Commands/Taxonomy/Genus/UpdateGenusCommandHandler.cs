@@ -26,16 +26,16 @@ public class UpdateGenusCommandHandler : IRequestHandler<UpdateGenusCommand, Gen
     }
     public async Task<GenusDto> Handle(UpdateGenusCommand request, CancellationToken cancellationToken)
     {
-        var decodedFamilyId = _hashids.DecodeSingle(request.Id);
-        var decodedOrderId = _hashids.DecodeSingle(request.FamilyId);
+        var decodedGenusId = _hashids.DecodeSingle(request.Id);
+        var decodedFamilyId = _hashids.DecodeSingle(request.FamilyId);
         
-        var requestedGenus = await _genusRepo.GetAsync(g => g.Id == decodedFamilyId, cancellationToken);
+        var requestedGenus = await _genusRepo.GetAsync(genus => genus.Id == decodedGenusId, cancellationToken);
         if (requestedGenus == null) throw new ValidationException($"Genus with id {request.Id} not found");
         
-        var requestedOrder = await _familyRepo.GetAsync(f => f.Id == decodedOrderId, cancellationToken);
-        if (requestedOrder == null) throw new ValidationException($"Family with id {request.FamilyId} not found");
+        var requestedFamily = await _familyRepo.GetAsync(family => family.Id == decodedFamilyId, cancellationToken);
+        if (requestedFamily == null) throw new ValidationException($"Family with id {request.FamilyId} not found");
         
-        UpdateModel(requestedGenus, request, requestedOrder);
+        UpdateModel(requestedGenus, request, requestedFamily);
         
         _genusRepo.Update(requestedGenus);
         await _genusRepo.SaveChangesAsync(cancellationToken);

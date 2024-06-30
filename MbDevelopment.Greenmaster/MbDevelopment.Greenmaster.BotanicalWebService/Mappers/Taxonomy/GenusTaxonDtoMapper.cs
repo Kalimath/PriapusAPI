@@ -29,7 +29,7 @@ public class GenusTaxonDtoMapper : ITaxonDtoMapper<TaxonGenus, GenusDto>
         };
     }
 
-    public BasicTaxonDto? ToBasicDto(TaxonGenus model)
+    public BasicTaxonDto ToBasicDto(TaxonGenus model)
     {
         return new BasicTaxonDto()
         {

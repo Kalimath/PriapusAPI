@@ -23,8 +23,7 @@ public class OrderTaxonDtoMapper : ITaxonDtoMapper<TaxonOrder, OrderDto>
             Class = new BasicTaxonDto()
             {
                 Id = _hashids.Encode(model.ClassId),
-                Name = model.Class.LatinName,
-                Description = model.Class.Description
+                ParentTaxonType = nameof(model.Class)
             }
         };
     }

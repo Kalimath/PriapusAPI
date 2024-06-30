@@ -22,7 +22,8 @@ public class FamilyTaxonDtoMapper : ITaxonDtoMapper<TaxonFamily, FamilyDto>
             Description = model.Description,
             Order = new BasicTaxonDto()
             {
-                Id = _hashids.Encode(model.OrderId)
+                Id = _hashids.Encode(model.OrderId),
+                ParentTaxonType = nameof(model.Order)
             }
         };
     }

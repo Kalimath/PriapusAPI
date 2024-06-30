@@ -23,7 +23,7 @@ public class KingdomTaxonDtoMapper : ITaxonDtoMapper<TaxonKingdom, KingdomDto>
         };
     }
 
-    public BasicTaxonDto? ToBasicDto(TaxonKingdom model)
+    public BasicTaxonDto ToBasicDto(TaxonKingdom model)
     {
         return new BasicTaxonDto()
         {

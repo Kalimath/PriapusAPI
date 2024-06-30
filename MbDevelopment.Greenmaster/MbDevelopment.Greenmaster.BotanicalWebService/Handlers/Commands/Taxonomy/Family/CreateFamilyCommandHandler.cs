@@ -26,6 +26,7 @@ public class CreateFamilyCommandHandler : IRequestHandler<CreateFamilyCommand, F
 
     public async Task<FamilyDto> Handle(CreateFamilyCommand request, CancellationToken cancellationToken)
     {
+        if (_familyRepo.Exists(x => x.LatinName == request.Name)) throw new ArgumentException($"Family with name: {request.Name} already exists");
         var decodedOrderId = _hashids.DecodeSingle(request.OrderId);
         var requestedOrder = await _orderRepo.GetAsync(x => x.Id == decodedOrderId, cancellationToken);
         if (requestedOrder == null) throw new KeyNotFoundException($"Order with id: {request.OrderId} not found");
@@ -41,6 +42,6 @@ public class CreateFamilyCommandHandler : IRequestHandler<CreateFamilyCommand, F
         await _familyRepo.SaveChangesAsync(cancellationToken);
         var createdItem = _familyRepo.Query(x => x.LatinName == request.Name && x.Description == request.Description).FirstOrDefault();
         if (createdItem == null) throw new Exception("Failed to get created family");
-        return _taxonDtoMapper.ToDto(createdItem)!;
+        return _taxonDtoMapper.ToDto(createdItem);
     }
 }

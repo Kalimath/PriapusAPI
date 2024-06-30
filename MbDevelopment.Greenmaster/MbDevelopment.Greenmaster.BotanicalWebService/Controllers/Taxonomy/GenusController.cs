@@ -1,5 +1,6 @@
 using MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Base;
 using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Genus;
+using MbDevelopment.Greenmaster.Contracts.Dtos.Taxonomy;
 using MbDevelopment.Greenmaster.Contracts.Queries.Taxonomy.Genus;
 using MbDevelopment.Greenmaster.Contracts.WebApi.Taxonomy.Api;
 using MediatR;
@@ -11,12 +12,14 @@ namespace MbDevelopment.Greenmaster.BotanicalWebService.Controllers.Taxonomy;
 public class GenusController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(GenusDto), 200)]
     public async Task<IActionResult> Get([FromRoute] string id)
     {
         return await ExecuteAsync(new GetGenusByIdQuery(id));
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<BasicTaxonDto>), 200)]
     public async Task<IActionResult> GetAll()
     {
         return await ExecuteAsync(new GetAllGeneraQuery());

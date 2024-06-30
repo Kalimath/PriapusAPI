@@ -1,9 +1,9 @@
 using FluentValidation;
-using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Class;
+using MbDevelopment.Greenmaster.Contracts.Commands.Taxonomy.Family;
 
 namespace MbDevelopment.Greenmaster.BotanicalWebService.Validation.Taxonomy.Family;
 
-public class DeleteFamilyCommandValidator : AbstractValidator<DeleteClassCommand>
+public class DeleteFamilyCommandValidator : AbstractValidator<DeleteFamilyCommand>
 {
     public DeleteFamilyCommandValidator()
     {

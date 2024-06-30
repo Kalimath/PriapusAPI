@@ -19,7 +19,8 @@ public class TaxonSpecies: ITaxonGroup, ISpecies
     public string TrademarkName { get; set; } = string.Empty;
     public string Cultivar { get; set; } = string.Empty;
     public string FullLatinName => $"{Genus.LatinName.FirstCharToUpper()} {LatinName.FirstCharToUpper()}" + (!string.IsNullOrEmpty(Cultivar)?$" \'{Cultivar.ToTitleCase()}\'":"");
-    
+    public string ImageUrl { get; set; }
+
     //TODO: add characteristics properties
     //TODO: add (max)dimensions properties
     

@@ -24,7 +24,7 @@ public class PhylumTaxonDtoMapper : ITaxonDtoMapper<TaxonPhylum, PhylumDto>
         };
     }
 
-    public BasicTaxonDto? ToBasicDto(TaxonPhylum model)
+    public BasicTaxonDto ToBasicDto(TaxonPhylum model)
     {
         return new BasicTaxonDto()
         {

@@ -34,6 +34,7 @@ public static class RegisterGreenmaster
         services.AddScoped<IRepository<TaxonOrder>, BotanicalRepository<TaxonOrder>>();
         services.AddScoped<IRepository<TaxonFamily>, BotanicalRepository<TaxonFamily>>();
         services.AddScoped<IRepository<TaxonGenus>, BotanicalRepository<TaxonGenus>>();
+        services.AddScoped<IRepository<TaxonSpecies>, BotanicalRepository<TaxonSpecies>>();
         return services;
     }
 
@@ -45,6 +46,7 @@ public static class RegisterGreenmaster
         services.AddScoped<ITaxonDtoMapper<TaxonOrder, OrderDto>, OrderTaxonDtoMapper>();
         services.AddScoped<ITaxonDtoMapper<TaxonFamily, FamilyDto>, FamilyTaxonDtoMapper>();
         services.AddScoped<ITaxonDtoMapper<TaxonGenus, GenusDto>, GenusTaxonDtoMapper>();
+        services.AddScoped<ITaxonDtoMapper<TaxonSpecies, SpeciesDto>, SpeciesTaxonDtoMapper>();
         return services;
     }
 }

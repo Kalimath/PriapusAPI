@@ -4,6 +4,7 @@ namespace MbDevelopment.Greenmaster.DataAccess.Base;
 
 public interface IRepository<T> where T : class
 {
+    bool Exists(Expression<Func<T, bool>> predicate);
     #region Get items
     Task<T?> GetAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
     Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate);
